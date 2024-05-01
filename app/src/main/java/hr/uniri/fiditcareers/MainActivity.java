@@ -1,6 +1,10 @@
 package hr.uniri.fiditcareers;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +23,20 @@ public class MainActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        Button loginBtn = findViewById(R.id.loginBtn);
+        EditText emailTxt = findViewById(R.id.emailTxt);
+        EditText passTxt = findViewById(R.id.passTxt);
+
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = emailTxt.getText().toString();
+                Log.d("MainActivity", "Email: " + email);
+                String password = passTxt.getText().toString(); // Get password from passTxt
+                Log.d("MainActivity", "Password: " + password);
+            }
         });
     }
 }
