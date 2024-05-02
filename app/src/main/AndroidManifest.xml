@@ -13,10 +13,16 @@
         android:theme="@style/Theme.FIDITCareers"
         tools:targetApi="31">
         <activity
-            android:name=".DashboardStudent"
+            android:name=".EmployerRegistration"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".StudentRegistration"
+            android:exported="false" />
+        <activity
+            android:name=".EmployerLogin"
+            android:exported="false" />
+        <activity
+            android:name=".StudentLogin"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,6 +34,12 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".DashboardStudent"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
