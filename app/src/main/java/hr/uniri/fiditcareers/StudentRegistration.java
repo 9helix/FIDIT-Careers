@@ -101,6 +101,10 @@ public class StudentRegistration extends AppCompatActivity {
                     // Insert the student object into the database
                     appDatabase.studentDao().insert(newStudent);
                     Log.d("MainActivity", "Student registration successful.");
+                    runOnUiThread(() -> Toast.makeText(StudentRegistration.this, "Registracija uspjela.", Toast.LENGTH_SHORT).show());
+                    Intent i = new Intent(StudentRegistration.this,StudentLogin.class);
+                    startActivity(i);
+
                 }
             }).start();
 

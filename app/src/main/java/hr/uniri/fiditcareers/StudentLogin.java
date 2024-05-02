@@ -56,6 +56,8 @@ public class StudentLogin extends AppCompatActivity {
                 // If count is greater than 0, a student with the given email exists
                 if (student != null && student.password.equals(password)) {
                     Log.d("MainActivity", "Login successful.");
+                    runOnUiThread(() -> Toast.makeText(StudentLogin.this, "Prijava uspješna!", Toast.LENGTH_SHORT).show());
+
                 } else {
                     Log.d("MainActivity", "Login failed.");
                     runOnUiThread(() -> Toast.makeText(StudentLogin.this, "Neuspjela prijava. Provjerite podatke.", Toast.LENGTH_SHORT).show());

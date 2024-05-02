@@ -58,6 +58,7 @@ public class EmployerLogin extends AppCompatActivity {
                 // If count is greater than 0, an employer with the given email exists
                 if (employer != null && employer.password.equals(password)) {
                     Log.d("MainActivity", "Login successful.");
+                    runOnUiThread(() -> Toast.makeText(EmployerLogin.this, "Prijava uspješna!", Toast.LENGTH_SHORT).show());
                 } else {
                     Log.d("MainActivity", "Login failed.");
                     runOnUiThread(() -> Toast.makeText(EmployerLogin.this, "Neuspjela prijava. Provjerite podatke.", Toast.LENGTH_SHORT).show());

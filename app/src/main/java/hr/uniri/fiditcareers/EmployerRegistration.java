@@ -85,10 +85,13 @@ public class EmployerRegistration extends AppCompatActivity {
                     // Insert the employer object into the database
                     appDatabase.employerDao().insert(newEmployer);
                     Log.d("MainActivity", "Employer registration successful.");
+                    runOnUiThread(() -> Toast.makeText(EmployerRegistration.this, "Registracija uspjela.", Toast.LENGTH_SHORT).show());
+
+                    Intent i = new Intent(EmployerRegistration.this,EmployerLogin.class);
+                    startActivity(i);
                 }
             }).start();
-            //Intent i = new Intent(MainActivity.this,StudentLogin.class);
-            //startActivity(i);
+
 
         });
 
