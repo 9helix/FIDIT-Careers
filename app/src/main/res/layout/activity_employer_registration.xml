@@ -17,7 +17,7 @@
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contactTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/employerNameTxt" />
 
     <TextView
         android:id="@+id/loginTitle"
@@ -112,17 +112,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/roleSwitch2" />
-
-    <EditText
-        android:id="@+id/contactTxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Kontakt"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/employerNameTxt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

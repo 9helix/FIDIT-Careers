@@ -51,11 +51,9 @@ public class DashboardEmployer extends AppCompatActivity
             // sets name, surname and email of logged employer on menu
             employerName = header.findViewById(R.id.nameSurnamePlaceholder);
             employerEmail = header.findViewById(R.id.emailPlaceholder);
-            employerContact = header.findViewById(R.id.employerContact);
 
             employerName.setText(employer.employerName);
             employerEmail.setText(employer.email);
-            employerContact.setText(employer.contact);
         }).start();
     }
 

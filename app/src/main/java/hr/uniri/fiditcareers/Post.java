@@ -25,5 +25,9 @@ public class Post {
     public String datePosted;
     @ColumnInfo(name = "Employer Id")
     public int employerId;
+    @ColumnInfo(name = "E-mail")
+    public String email;
+    @ColumnInfo(name = "Phone Number")
+    public String phone;
 }
 

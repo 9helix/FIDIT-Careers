@@ -39,9 +39,8 @@ public class EmployerRegistration extends AppCompatActivity {
         TextView registerTxt = findViewById(R.id.registrationRedirect);
         Switch roleSwitch = findViewById(R.id.roleSwitch2);
         EditText confirmPassTxt = findViewById(R.id.confirmPassTxt);
-
         EditText employerNametxt = findViewById(R.id.employerNameTxt);
-        EditText contactTxt = findViewById(R.id.contactTxt);
+
         loginBtn.setOnClickListener(view -> {
             String email = emailTxt.getText().toString();
             Log.d("MainActivity", "Email: " + email);
@@ -49,14 +48,9 @@ public class EmployerRegistration extends AppCompatActivity {
             Log.d("MainActivity", "Password: " + password);
             String confirmPass = confirmPassTxt.getText().toString();
             String employerName = employerNametxt.getText().toString();
-            String contact = contactTxt.getText().toString();
 
             if(employerName.isEmpty()) {
                 employerNametxt.setError("Unesite naziv tvrtke");
-                return;
-            }
-            if(contact.isEmpty()) {
-                contactTxt.setError("Unesite kontakt");
                 return;
             }
             if(!password.equals(confirmPass)) {
@@ -80,7 +74,6 @@ public class EmployerRegistration extends AppCompatActivity {
                     newEmployer.email = email;
                     newEmployer.password = password;
                     newEmployer.employerName = employerName;
-                    newEmployer.contact = contact;
 
                     // Insert the employer object into the database
                     appDatabase.employerDao().insert(newEmployer);

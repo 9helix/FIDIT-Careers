@@ -8,8 +8,6 @@ public class Employer {
     public int id;
     @ColumnInfo(name = "Employer Name")
     public String employerName;
-    @ColumnInfo(name = "Contact")
-    public String contact;
     @ColumnInfo(name = "E-mail")
     public String email;
     @ColumnInfo(name = "Password")
