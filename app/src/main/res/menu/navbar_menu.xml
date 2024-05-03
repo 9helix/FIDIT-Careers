@@ -12,8 +12,9 @@
             android:title="Home"/>
 
         <item
-            android:id="@+id/nav_settings"
-            android:title="Settings"/>
+            android:id="@+id/nav_edit_student"
+            android:icon="@drawable/baseline_edit_24"
+            android:title="Uredi podatke"/>
     </group>
     <item
         android:title="">
@@ -22,7 +23,7 @@
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/baseline_logout_24"
-                android:title="Logout"/>
+                android:title="Odjava"/>
         </menu>
 
     </item>

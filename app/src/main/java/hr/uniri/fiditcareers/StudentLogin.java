@@ -2,7 +2,6 @@ package hr.uniri.fiditcareers;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -41,13 +40,7 @@ public class StudentLogin extends AppCompatActivity {
 
         loginBtn.setOnClickListener(view -> {
             String email = emailTxt.getText().toString();
-            Log.d("MainActivity", "Email: " + email);
             String password = passTxt.getText().toString(); // Get password from passTxt
-            Log.d("MainActivity", "Password: " + password);
-
-            //Intent i = new Intent(MainActivity.this,StudentLogin.class);
-            //startActivity(i);
-
 
             new Thread(() -> {
                 // Check if a student with the given email exists in the database
@@ -55,11 +48,13 @@ public class StudentLogin extends AppCompatActivity {
 
                 // If count is greater than 0, a student with the given email exists
                 if (student != null && student.password.equals(password)) {
-                    Log.d("MainActivity", "Login successful.");
                     runOnUiThread(() -> Toast.makeText(StudentLogin.this, "Prijava uspješna!", Toast.LENGTH_SHORT).show());
 
+                    // store email in a public variable
+                    ((PublicVariable) this.getApplication()).setEmail(email);
+                    Intent i = new Intent(StudentLogin.this,DashboardStudent.class);
+                    startActivity(i);
                 } else {
-                    Log.d("MainActivity", "Login failed.");
                     runOnUiThread(() -> Toast.makeText(StudentLogin.this, "Neuspjela prijava. Provjerite podatke.", Toast.LENGTH_SHORT).show());
 
                 }

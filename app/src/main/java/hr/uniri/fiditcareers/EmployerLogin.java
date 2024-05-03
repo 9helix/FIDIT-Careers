@@ -2,7 +2,6 @@ package hr.uniri.fiditcareers;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -43,13 +42,7 @@ public class EmployerLogin extends AppCompatActivity {
 
         loginBtn.setOnClickListener(view -> {
             String email = emailTxt.getText().toString();
-            Log.d("MainActivity", "Email: " + email);
             String password = passTxt.getText().toString(); // Get password from passTxt
-            Log.d("MainActivity", "Password: " + password);
-
-            //Intent i = new Intent(MainActivity.this,StudentLogin.class);
-            //startActivity(i);
-
 
             new Thread(() -> {
                 // Check if an employer with the given email exists in the database
@@ -57,12 +50,14 @@ public class EmployerLogin extends AppCompatActivity {
 
                 // If count is greater than 0, an employer with the given email exists
                 if (employer != null && employer.password.equals(password)) {
-                    Log.d("MainActivity", "Login successful.");
                     runOnUiThread(() -> Toast.makeText(EmployerLogin.this, "Prijava uspješna!", Toast.LENGTH_SHORT).show());
-                } else {
-                    Log.d("MainActivity", "Login failed.");
-                    runOnUiThread(() -> Toast.makeText(EmployerLogin.this, "Neuspjela prijava. Provjerite podatke.", Toast.LENGTH_SHORT).show());
 
+                    // store email in a public variable
+                    ((PublicVariable) this.getApplication()).setEmail(email);
+                    Intent i = new Intent(EmployerLogin.this,DashboardEmployer.class);
+                    startActivity(i);
+                } else {
+                    runOnUiThread(() -> Toast.makeText(EmployerLogin.this, "Neuspjela prijava. Provjerite podatke.", Toast.LENGTH_SHORT).show());
                 }
             }).start();
 
@@ -76,6 +71,5 @@ public class EmployerLogin extends AppCompatActivity {
             Intent i = new Intent(EmployerLogin.this,StudentLogin.class);
             startActivity(i);
         });
-
     }
 }

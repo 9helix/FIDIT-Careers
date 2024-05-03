@@ -17,7 +17,7 @@ import androidx.room.Room;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class DashboardStudent extends AppCompatActivity
+public class DashboardEmployer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     public DrawerLayout drawerLayout;
     private AppDatabase appDatabase;
@@ -25,7 +25,7 @@ public class DashboardStudent extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard_student);
+        setContentView(R.layout.activity_dashboard_employer);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -43,19 +43,19 @@ public class DashboardStudent extends AppCompatActivity
 
         new Thread(() -> {
             String email = ((PublicVariable) this.getApplication()).getEmail();
-            Student student = appDatabase.studentDao().getStudentByEmail(email);
+            Employer employer = appDatabase.employerDao().getEmployerByEmail(email);
 
-            TextView studentNameSurname, studentEmail, employerContact;
+            TextView employerName, employerEmail, employerContact;
             View header = navigationView.getHeaderView(0);
 
-            // sets name, surname and email of logged student on menu
-            studentNameSurname = header.findViewById(R.id.nameSurnamePlaceholder);
-            studentEmail = header.findViewById(R.id.emailPlaceholder);
+            // sets name, surname and email of logged employer on menu
+            employerName = header.findViewById(R.id.nameSurnamePlaceholder);
+            employerEmail = header.findViewById(R.id.emailPlaceholder);
             employerContact = header.findViewById(R.id.employerContact);
 
-            studentNameSurname.setText(student.name + " " + student.surname);
-            studentEmail.setText(student.email);
-            employerContact.setVisibility(View.GONE);
+            employerName.setText(employer.employerName);
+            employerEmail.setText(employer.email);
+            employerContact.setText(employer.contact);
         }).start();
     }
 
@@ -70,7 +70,7 @@ public class DashboardStudent extends AppCompatActivity
                 break;
             case R.id.nav_logout:
                 Toast.makeText(this, "Uspješna odjava!", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(DashboardStudent.this,StudentLogin.class);
+                Intent i = new Intent(DashboardEmployer.this,EmployerLogin.class);
                 startActivity(i);
                 break;
         }
