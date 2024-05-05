@@ -25,35 +25,39 @@
             android:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
         <RelativeLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             tools:context=".DashboardStudent">
+
             <androidx.appcompat.widget.SearchView
+                android:id="@+id/search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="12dp"
-                android:layout_marginStart="12dp"
-                android:id="@+id/search"
-                app:iconifiedByDefault="false"
-                app:searchHintIcon="@null"
-                app:queryHint="Search..."
+                android:background="@drawable/search_bkg"
                 android:focusable="false"
                 app:closeIcon="@drawable/baseline_clear_24"
-                app:searchIcon="@drawable/baseline_search_24"
-                android:background="@drawable/search_bkg"/>
+                app:iconifiedByDefault="false"
+                app:queryHint="Search..."
+                app:searchHintIcon="@null"
+                app:searchIcon="@drawable/baseline_search_24" />
+
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/recyclerView"
+                android:layout_below="@id/search"
                 android:layout_marginTop="8dp"
-                android:scrollbars="vertical"
-                android:layout_below="@id/search"/>
+                android:scrollbars="vertical">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
         </RelativeLayout>
+
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView

@@ -1,11 +1,9 @@
 package hr.uniri.fiditcareers;
 
-import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +31,7 @@ public class AddPost extends Fragment {
         EditText requiredYearOfStudyTxt = parentHolder.findViewById(R.id.requiredYearOfStudyTxt);
         EditText requirementsTxt = parentHolder.findViewById(R.id.requirementsTxt);
         EditText descriptionTxt = parentHolder.findViewById(R.id.descriptionTxt);
-        EditText emailTxt = parentHolder.findViewById(R.id.emailTxt);
+        EditText emailTxt = parentHolder.findViewById(R.id.editEmailTxt);
         EditText phoneNumberTxt = parentHolder.findViewById(R.id.phoneNumberTxt);
 
         postBtn.setOnClickListener(view -> {

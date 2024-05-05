@@ -33,8 +33,8 @@ public class StudentLogin extends AppCompatActivity {
                 AppDatabase.class, "app-db").build();
 
         Button loginBtn = findViewById(R.id.loginBtn);
-        EditText emailTxt = findViewById(R.id.emailTxt);
-        EditText passTxt = findViewById(R.id.passTxt);
+        EditText emailTxt = findViewById(R.id.editEmailTxt);
+        EditText passTxt = findViewById(R.id.editPassTxt);
         TextView registerTxt = findViewById(R.id.registrationRedirect);
         Switch roleSwitch = findViewById(R.id.roleSwitch2);
 

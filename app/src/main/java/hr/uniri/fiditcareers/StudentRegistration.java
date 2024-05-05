@@ -31,13 +31,13 @@ public class StudentRegistration extends AppCompatActivity {
         appDatabase = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "app-db").build();
         Button loginBtn = findViewById(R.id.loginBtn);
-        EditText emailTxt = findViewById(R.id.emailTxt);
-        EditText passTxt = findViewById(R.id.passTxt);
+        EditText emailTxt = findViewById(R.id.editEmailTxt);
+        EditText passTxt = findViewById(R.id.editPassTxt);
         TextView registerTxt = findViewById(R.id.registrationRedirect);
         Switch roleSwitch = findViewById(R.id.roleSwitch2);
         EditText nameTxt = findViewById(R.id.nameTxt);
-        EditText surnameTxt = findViewById(R.id.surnameTxt);
-        EditText studyYearTxt = findViewById(R.id.studyYearTxt);
+        EditText surnameTxt = findViewById(R.id.editSurnameTxt);
+        EditText studyYearTxt = findViewById(R.id.editStudyYearTxt);
         EditText confirmPassTxt = findViewById(R.id.confirmPassTxt);
 
         loginBtn.setOnClickListener(view -> {

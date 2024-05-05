@@ -15,10 +15,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.room.Room;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.List;
-
 public class EmployerLogin extends AppCompatActivity {
     private AppDatabase appDatabase;
 
@@ -37,8 +33,8 @@ public class EmployerLogin extends AppCompatActivity {
                 AppDatabase.class, "app-db").build();
 
         Button loginBtn = findViewById(R.id.loginBtn);
-        EditText emailTxt = findViewById(R.id.emailTxt);
-        EditText passTxt = findViewById(R.id.passTxt);
+        EditText emailTxt = findViewById(R.id.editEmailTxt);
+        EditText passTxt = findViewById(R.id.editPassTxt);
         TextView registerTxt = findViewById(R.id.registrationRedirect);
         Switch roleSwitch = findViewById(R.id.roleSwitch2);
 

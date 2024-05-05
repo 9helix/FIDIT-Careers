@@ -3,6 +3,7 @@ package hr.uniri.fiditcareers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -17,10 +18,14 @@ import androidx.room.Room;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.HashMap;
+
 public class DashboardStudent extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     public DrawerLayout drawerLayout;
-    private AppDatabase appDatabase;
+    public AppDatabase appDatabase;
+    public HashMap<String, Object> studentData = new HashMap<>();
+    private String studentEmailArg = "email";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,17 @@ public class DashboardStudent extends AppCompatActivity
             studentEmail = header.findViewById(R.id.emailPlaceholder);
 
             studentNameSurname.setText(student.name + " " + student.surname);
+
+            studentEmailArg = student.email;
+            studentData.put("id", student.id);
+            studentData.put("email", student.email);
+            studentData.put("pass", student.password);
+            studentData.put("about", student.aboutMe);
+            studentData.put("name", student.name);
+            studentData.put("surname", student.surname);
+            studentData.put("year", student.studyYear);
+
+
             studentEmail.setText(student.email);
         }).start();
     }
@@ -65,7 +81,13 @@ public class DashboardStudent extends AppCompatActivity
                 startActivity(in);
                 break;
             case R.id.nav_edit_student:
-                Toast.makeText(this, "Settings clicked!", Toast.LENGTH_SHORT).show();
+                SearchView searchView = findViewById(R.id.search);
+                searchView.setVisibility(View.GONE);
+
+                StudentEditFragment fragment = StudentEditFragment.newInstance(studentEmailArg);
+                getSupportFragmentManager().beginTransaction().replace(R.id.relativeLayout, fragment).commit();
+
+                //Toast.makeText(this, "Settings clicked!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_logout:
                 Toast.makeText(this, "Uspješna odjava!", Toast.LENGTH_SHORT).show();

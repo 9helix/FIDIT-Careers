@@ -12,6 +12,8 @@ public class Student {
     public String surname;
     @ColumnInfo(name = "Year of Study")
     public int studyYear;
+    @ColumnInfo(name = "About Me")
+    public String aboutMe;
     @ColumnInfo(name = "E-mail")
     public String email;
     @ColumnInfo(name = "Password")
