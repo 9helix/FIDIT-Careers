@@ -2,7 +2,6 @@ package hr.uniri.fiditcareers;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -44,26 +43,29 @@ public class StudentRegistration extends AppCompatActivity {
         loginBtn.setOnClickListener(view -> {
             String name = nameTxt.getText().toString();
             String surname = surnameTxt.getText().toString();
-            int studyYear = Integer.parseInt(studyYearTxt.getText().toString());
+            String studyYear = studyYearTxt.getText().toString();
             String email = emailTxt.getText().toString();
-            Log.d("MainActivity", "Email: " + email);
             String password = passTxt.getText().toString(); // Get password from passTxt
-            Log.d("MainActivity", "Password: " + password);
             String confirmPass = confirmPassTxt.getText().toString();
 
-            //Intent i = new Intent(MainActivity.this,StudentLogin.class);
-            //startActivity(i);
             if(name.isEmpty()) {
-                emailTxt.setError("Unesite ime");
+                nameTxt.setError("Unesite ime.");
                 return;
             }
             if(surname.isEmpty()) {
-                emailTxt.setError("Unesite prezime");
+                surnameTxt.setError("Unesite prezime.");
                 return;
             }
-            if(studyYear>5 || studyYear<1) {
-                emailTxt.setError("Godina studija mora biti u intervalu od 1 do 5.");
+            if (studyYear.isEmpty()) {
+                studyYearTxt.setError("Unesite godinu studija.");
                 return;
+            } else {
+                int yearOfStudyInt =  Integer.parseInt(studyYear);
+
+                if(yearOfStudyInt < 1 || yearOfStudyInt > 5) {
+                    studyYearTxt.setError("Godina studija mora biti u intervalu od 1 do 5.");
+                    return;
+                }
             }
             if(email.isEmpty()) {
                 emailTxt.setError("Unesite e-mail.");
@@ -74,40 +76,35 @@ public class StudentRegistration extends AppCompatActivity {
                 return;
             }
             if(!password.equals(confirmPass)) {
-                //confirmPassTxt.setError("Lozinke se ne podudaraju.");
                 runOnUiThread(() -> Toast.makeText(StudentRegistration.this, "Lozinke se ne podudaraju.", Toast.LENGTH_SHORT).show());
-
                 return;
             }
             new Thread(() -> {
                 // Check if a student with the given email exists in the database
                 Student student = appDatabase.studentDao().getStudentByEmail(email);
 
-
                 // If count is greater than 0, a student with the given email exists
                 if (student != null) {
-                    Log.d("MainActivity", "Student with the given email already exists.");
                     runOnUiThread(() -> Toast.makeText(StudentRegistration.this, "Student s tom e-mail adresom već postoji.", Toast.LENGTH_SHORT).show());
-
                 } else {
                     // Create a new student object
+                    int yearOfStudyInt = Integer.parseInt(studyYear);
+
                     Student newStudent = new Student();
                     newStudent.email = email;
                     newStudent.password = password;
                     newStudent.name = name;
                     newStudent.surname = surname;
-                    newStudent.studyYear = studyYear;
+                    newStudent.studyYear = yearOfStudyInt;
 
                     // Insert the student object into the database
                     appDatabase.studentDao().insert(newStudent);
-                    Log.d("MainActivity", "Student registration successful.");
                     runOnUiThread(() -> Toast.makeText(StudentRegistration.this, "Registracija uspjela.", Toast.LENGTH_SHORT).show());
                     Intent i = new Intent(StudentRegistration.this,StudentLogin.class);
                     startActivity(i);
 
                 }
             }).start();
-
         });
 
         registerTxt.setOnClickListener(view -> {

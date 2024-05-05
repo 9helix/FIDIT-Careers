@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.room.Room;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class DashboardEmployer extends AppCompatActivity
@@ -38,8 +39,17 @@ public class DashboardEmployer extends AppCompatActivity
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostsDisplayEmployer()).commit();
+            navigationView.setCheckedItem(R.id.nav_home);
+        }
         appDatabase = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "app-db").build();
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(view -> {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddPost()).commit();
+        });
 
         new Thread(() -> {
             String email = ((PublicVariable) this.getApplication()).getEmail();
@@ -48,7 +58,7 @@ public class DashboardEmployer extends AppCompatActivity
             TextView employerName, employerEmail, employerContact;
             View header = navigationView.getHeaderView(0);
 
-            // sets name, surname and email of logged employer on menu
+            // sets name and email of logged employer on menu
             employerName = header.findViewById(R.id.nameSurnamePlaceholder);
             employerEmail = header.findViewById(R.id.emailPlaceholder);
 
@@ -61,7 +71,7 @@ public class DashboardEmployer extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_home:
-                Toast.makeText(this, "Home clicked!", Toast.LENGTH_SHORT).show();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostsDisplayEmployer()).commit();
                 break;
             case R.id.nav_edit_student:
                 Toast.makeText(this, "Settings clicked!", Toast.LENGTH_SHORT).show();

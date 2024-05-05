@@ -7,8 +7,8 @@ import java.util.List;
 public interface PostDao {
     @Insert
     void insert(Post post);
+
     @Query("SELECT * FROM Post")
     List<Post> getAll();
-
 }
 

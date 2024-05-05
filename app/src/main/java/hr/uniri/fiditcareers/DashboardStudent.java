@@ -51,11 +51,9 @@ public class DashboardStudent extends AppCompatActivity
             // sets name, surname and email of logged student on menu
             studentNameSurname = header.findViewById(R.id.nameSurnamePlaceholder);
             studentEmail = header.findViewById(R.id.emailPlaceholder);
-            employerContact = header.findViewById(R.id.employerContact);
 
             studentNameSurname.setText(student.name + " " + student.surname);
             studentEmail.setText(student.email);
-            employerContact.setVisibility(View.GONE);
         }).start();
     }
 
@@ -63,7 +61,8 @@ public class DashboardStudent extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_home:
-                Toast.makeText(this, "Home clicked!", Toast.LENGTH_SHORT).show();
+                Intent in = new Intent(DashboardStudent.this,DashboardStudent.class);
+                startActivity(in);
                 break;
             case R.id.nav_edit_student:
                 Toast.makeText(this, "Settings clicked!", Toast.LENGTH_SHORT).show();

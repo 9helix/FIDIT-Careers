@@ -2,7 +2,6 @@ package hr.uniri.fiditcareers;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -43,14 +42,16 @@ public class EmployerRegistration extends AppCompatActivity {
 
         loginBtn.setOnClickListener(view -> {
             String email = emailTxt.getText().toString();
-            Log.d("MainActivity", "Email: " + email);
             String password = passTxt.getText().toString(); // Get password from passTxt
-            Log.d("MainActivity", "Password: " + password);
             String confirmPass = confirmPassTxt.getText().toString();
             String employerName = employerNametxt.getText().toString();
 
             if(employerName.isEmpty()) {
                 employerNametxt.setError("Unesite naziv tvrtke");
+                return;
+            }
+            if(email.isEmpty()) {
+                emailTxt.setError("Unesite e-mail.");
                 return;
             }
             if(!password.equals(confirmPass)) {
@@ -65,7 +66,6 @@ public class EmployerRegistration extends AppCompatActivity {
 
                 // If count is greater than 0, an employer with the given email exists
                 if (employer != null) {
-                    Log.d("MainActivity", "Employer with the given email already exists.");
                     runOnUiThread(() -> Toast.makeText(EmployerRegistration.this, "Poslodavac s tom e-mail adresom već postoji.", Toast.LENGTH_SHORT).show());
 
                 } else {
@@ -77,15 +77,12 @@ public class EmployerRegistration extends AppCompatActivity {
 
                     // Insert the employer object into the database
                     appDatabase.employerDao().insert(newEmployer);
-                    Log.d("MainActivity", "Employer registration successful.");
                     runOnUiThread(() -> Toast.makeText(EmployerRegistration.this, "Registracija uspjela.", Toast.LENGTH_SHORT).show());
 
                     Intent i = new Intent(EmployerRegistration.this,EmployerLogin.class);
                     startActivity(i);
                 }
             }).start();
-
-
         });
 
         registerTxt.setOnClickListener(view -> {
