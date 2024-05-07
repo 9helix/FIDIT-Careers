@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="onsite_online">
+        <item>onsite</item>
+        <item>online</item>
+    </string-array>
+</resources>

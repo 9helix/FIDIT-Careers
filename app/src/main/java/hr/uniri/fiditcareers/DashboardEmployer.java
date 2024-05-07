@@ -46,11 +46,6 @@ public class DashboardEmployer extends AppCompatActivity
         appDatabase = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "app-db").build();
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddPost()).commit();
-        });
-
         new Thread(() -> {
             String email = ((PublicVariable) this.getApplication()).getEmail();
             Employer employer = appDatabase.employerDao().getEmployerByEmail(email);

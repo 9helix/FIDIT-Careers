@@ -4,11 +4,14 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.sql.Timestamp;
@@ -31,8 +34,26 @@ public class AddPost extends Fragment {
         EditText requiredYearOfStudyTxt = parentHolder.findViewById(R.id.requiredYearOfStudyTxt);
         EditText requirementsTxt = parentHolder.findViewById(R.id.requirementsTxt);
         EditText descriptionTxt = parentHolder.findViewById(R.id.descriptionTxt);
-        EditText emailTxt = parentHolder.findViewById(R.id.editEmailTxt);
+        EditText emailTxt = parentHolder.findViewById(R.id.emailTxt);
         EditText phoneNumberTxt = parentHolder.findViewById(R.id.phoneNumberTxt);
+        Spinner spinnerOption = parentHolder.findViewById(R.id.spinnerOptions);
+        EditText locationTxt = parentHolder.findViewById(R.id.locationTxt);
+
+        // when dropdown option is selected
+        spinnerOption.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int onsiteOnline = spinnerOption.getSelectedItemPosition();
+                if (onsiteOnline == 0) { // onsite option was selected
+                    locationTxt.setVisibility(View.VISIBLE);
+                } else { // online option was selected
+                    locationTxt.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
 
         postBtn.setOnClickListener(view -> {
             String jobName = jobNameTxt.getText().toString();
@@ -41,6 +62,8 @@ public class AddPost extends Fragment {
             String description = descriptionTxt.getText().toString();
             String email = emailTxt.getText().toString();
             String phoneNumber = phoneNumberTxt.getText().toString();
+            int onsiteOnline = spinnerOption.getSelectedItemPosition();
+            String location = locationTxt.getText().toString();
 
             if(jobName.isEmpty()) {
                 jobNameTxt.setError("Unesite naziv posla.");
@@ -61,6 +84,12 @@ public class AddPost extends Fragment {
                 requirementsTxt.setError("Unesite potrebne vještine.");
                 return;
             }
+            if (onsiteOnline == 0) { // onsite
+                if(location.isEmpty()) {
+                    locationTxt.setError("Unesite lokaciju izvođenja posla.");
+                    return;
+                }
+            }
             if(description.isEmpty()) {
                 descriptionTxt.setError("Unesite opis posla.");
                 return;
@@ -70,11 +99,15 @@ public class AddPost extends Fragment {
                 return;
             }
 
+            Log.d("AddPost", "online ili onsite => " + onsiteOnline);
+            Log.d("AddPost", "lokacija => " + location);
+
             new Thread(() -> {
                 String employerEmail = ((PublicVariable) getActivity().getApplication()).getEmail();
                 Employer employer = appDatabase.employerDao().getEmployerByEmail(employerEmail);
                 int reqYearOfStudy =  Integer.parseInt(requiredYearOfStudy);
 
+                // reformats the timestamp
                 SimpleDateFormat sdf = new SimpleDateFormat("dd. MM. yyyy.");
                 Date date = new Date();
                 Timestamp currentDate = new Timestamp(date.getTime());
@@ -89,12 +122,20 @@ public class AddPost extends Fragment {
                 newPost.phone = phoneNumber;
                 newPost.employerId = employer.id;
                 newPost.datePosted = sdf.format(currentDate);
+                newPost.location = location;
+
+                if (onsiteOnline == 0) { // onsite
+                    newPost.onsiteOnline = "onsite";
+                } else { // online
+                    newPost.onsiteOnline = "online";
+                }
                 // add created post to database
                 appDatabase.postDao().insert(newPost);
 
                 getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), "Uspješno stvoren oglas!", Toast.LENGTH_SHORT).show());
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostsDisplayEmployer()).commit();
             }).start();
+
         });
 
         return parentHolder;

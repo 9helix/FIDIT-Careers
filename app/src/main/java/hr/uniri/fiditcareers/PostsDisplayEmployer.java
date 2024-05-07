@@ -22,11 +22,14 @@ public class PostsDisplayEmployer extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View parentHolder = inflater.inflate(R.layout.fragment_posts_display_employer, container, false);
-
         appDatabase = Room.databaseBuilder(getActivity().getApplicationContext(),
                 AppDatabase.class, "app-db").build();
 
-        Log.d("PostsDisplayEmployer", "Trenutne objave:");
+        FloatingActionButton fab = parentHolder.findViewById(R.id.fab);
+        fab.setOnClickListener(view -> {
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddPost()).commit();
+        });
+
         new Thread(() -> {
             List<Post> oglasi = appDatabase.postDao().getAll();
             oglasi.forEach((n) -> printOglasi(n));
@@ -36,9 +39,16 @@ public class PostsDisplayEmployer extends Fragment {
     }
 
     public void printOglasi(Post x) {
-        String s = x.id + "\n" + x.jobName + "\n" + x.reqStudyYear + "\n"
-                        + x.requirements + "\n" + x.desc + "\n" + x.email
-                        + "\n" + x.phone + "\n" + x.employerId + "\n" + x.datePosted;
+        String s = x.id + "\nNaziv posla: " + x.jobName
+                        + "\nminim. godina studija: " + x.reqStudyYear
+                        + "\n\nzahtjevi: " + x.requirements
+                        + "\nopis: " + x.desc
+                        + "\ne-mail: " + x.email
+                        + "\nopcija: " + x.onsiteOnline
+                        + "\nlokacija: " + x.location
+                        + "\ntelefon. broj: " + x.phone
+                        + "\nID zaposlenika: " + x.employerId
+                        + "\ndatum objave: " + x.datePosted;
         Log.d("PostsDisplayEmployer", s);
     }
 }
