@@ -3,12 +3,14 @@ package hr.uniri.fiditcareers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -18,11 +20,14 @@ import androidx.room.Room;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.HashMap;
+
 public class DashboardEmployer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     public DrawerLayout drawerLayout;
-    private AppDatabase appDatabase;
-
+    public AppDatabase appDatabase;
+    public HashMap<String, Object> employerData = new HashMap<>();
+    private String employerEmailArg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +64,13 @@ public class DashboardEmployer extends AppCompatActivity
 
             employerName.setText(employer.employerName);
             employerEmail.setText(employer.email);
+
+            employerEmailArg = employer.email;
+            employerData.put("id", employer.id);
+            employerData.put("name", employer.employerName);
+            employerData.put("email", employer.email);
+            employerData.put("pass", employer.password);
+
         }).start();
     }
 
@@ -69,7 +81,13 @@ public class DashboardEmployer extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostsDisplayEmployer()).commit();
                 break;
             case R.id.nav_edit_student:
-                Toast.makeText(this, "Settings clicked!", Toast.LENGTH_SHORT).show();
+                //SearchView searchView = findViewById(R.id.search);
+                //searchView.setVisibility(View.GONE);
+
+                EmployerEditFragment fragment = EmployerEditFragment.newInstance(employerEmailArg);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+
+                //Toast.makeText(this, "Settings clicked!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_logout:
                 Toast.makeText(this, "Uspješna odjava!", Toast.LENGTH_SHORT).show();
