@@ -1,22 +1,18 @@
 package hr.uniri.fiditcareers;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ImageView;
-import android.widget.TextView;
-public class DetailActivity extends AppCompatActivity {
-    TextView detailDesc, detailTitle;
-    ImageView detailImage;
+
+import androidx.fragment.app.Fragment;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+public class DetailActivity extends Fragment {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
-        detailDesc = findViewById(R.id.detailDesc);
-        detailTitle = findViewById(R.id.detailTitle);
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null){
-            detailDesc.setText(bundle.getInt("Desc"));
-            detailTitle.setText(bundle.getString("Title"));
-        }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_detail_activity, container, false);
     }
 }

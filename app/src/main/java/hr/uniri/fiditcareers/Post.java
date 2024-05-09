@@ -33,13 +33,16 @@ public class Post {
     @ColumnInfo(name = "Date Posted")
     public String datePosted;
 
-    @ColumnInfo(name = "Employer Id")
-    public int employerId;
-
     @ColumnInfo(name = "E-mail")
     public String email;
 
     @ColumnInfo(name = "Phone Number")
     public String phone;
+
+    @ColumnInfo(name = "Employer Id")
+    public int employerId;
+
+    @ColumnInfo(name = "Employer Name")
+    public String employerName;
 }
 

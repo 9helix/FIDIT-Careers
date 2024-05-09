@@ -40,15 +40,16 @@ public class PostsDisplayEmployer extends Fragment {
 
     public void printOglasi(Post x) {
         String s = x.id + "\nNaziv posla: " + x.jobName
-                        + "\nminim. godina studija: " + x.reqStudyYear
-                        + "\n\nzahtjevi: " + x.requirements
-                        + "\nopis: " + x.desc
-                        + "\ne-mail: " + x.email
-                        + "\nopcija: " + x.onsiteOnline
-                        + "\nlokacija: " + x.location
-                        + "\ntelefon. broj: " + x.phone
-                        + "\nID zaposlenika: " + x.employerId
-                        + "\ndatum objave: " + x.datePosted;
+                + "\nminim. godina studija: " + x.reqStudyYear
+                + "\nzahtjevi: " + x.requirements
+                + "\nopis: " + x.desc
+                + "\ne-mail: " + x.email
+                + "\nopcija: " + x.onsiteOnline
+                + "\nlokacija: " + x.location
+                + "\ntelefon. broj: " + x.phone
+                + "\nID zaposlenika: " + x.employerId
+                + "\nZaposlenik: " + x.employerName
+                + "\ndatum objave: " + x.datePosted;
         Log.d("PostsDisplayEmployer", s);
     }
 }

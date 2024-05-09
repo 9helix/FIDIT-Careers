@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="12dp"
             android:background="@drawable/search_bkg"
             android:focusable="false"
@@ -27,6 +27,7 @@
             app:queryHint="Pretraži oglase..."
             app:searchHintIcon="@null"
             app:searchIcon="@drawable/baseline_search_24" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

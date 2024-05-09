@@ -121,13 +121,15 @@ public class AddPost extends Fragment {
                 newPost.email = email;
                 newPost.phone = phoneNumber;
                 newPost.employerId = employer.id;
+                newPost.employerName = employer.employerName;
                 newPost.datePosted = sdf.format(currentDate);
-                newPost.location = location;
 
                 if (onsiteOnline == 0) { // onsite
                     newPost.onsiteOnline = "onsite";
+                    newPost.location = location;
                 } else { // online
                     newPost.onsiteOnline = "online";
+                    newPost.location = "online";
                 }
                 // add created post to database
                 appDatabase.postDao().insert(newPost);
