@@ -10,13 +10,16 @@ import java.util.List;
 public interface StudentDao {
     @Insert
     void insert(Student student);
+
     @Query("SELECT * FROM Student")
     List<Student> getAll();
 
     @Query("SELECT * FROM Student WHERE `E-mail` = :email")
     Student getStudentByEmail(String email);
+
     @Query("SELECT * FROM Student WHERE id = :id")
     Student getStudentById(int id);
+
     @Update
     void updateStudent(Student student);
 }

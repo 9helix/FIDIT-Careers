@@ -1,7 +1,6 @@
 package hr.uniri.fiditcareers;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +8,7 @@ import android.widget.TextView;
 import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
@@ -39,14 +39,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         holder.internshipOnsiteOnline.setText(dataList.get(position).onsiteOnline);
         holder.internshipLocation.setText(dataList.get(position).location);
         holder.internshipReqYearOfStudy.setText(Integer.toString(dataList.get(position).reqStudyYear));
-/*
-        holder.recCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        holder.internshipId.setText(Integer.toString(dataList.get(position).id));
 
-            }
+        holder.recCard.setOnClickListener(view -> {
+            // send id of selected post to the fragment with details about the selected post
+            DetailPost fragment = DetailPost.newInstance(dataList.get(holder.getAdapterPosition()).id);
+            ((FragmentActivity)context).getSupportFragmentManager()
+                    .beginTransaction().replace(R.id.fragment_container, fragment).commit();
         });
- */
     }
 
     @Override
@@ -54,8 +54,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         return dataList.size();
     }
 }
+
 class MyViewHolder extends RecyclerView.ViewHolder{
-    TextView internshipName, internshipDate, internshipEmployer,
+    TextView internshipName, internshipDate, internshipEmployer, internshipId,
             internshipOnsiteOnline, internshipLocation, internshipReqYearOfStudy;
     CardView recCard;
 
@@ -67,6 +68,7 @@ class MyViewHolder extends RecyclerView.ViewHolder{
         internshipOnsiteOnline = itemView.findViewById(R.id.internshipOnsiteOnline);
         internshipLocation = itemView.findViewById(R.id.internshipLocation);
         internshipReqYearOfStudy = itemView.findViewById(R.id.internshipReqYearOfStudy);
+        internshipId = itemView.findViewById(R.id.internshipId);
         recCard = itemView.findViewById(R.id.recCard);
     }
 }

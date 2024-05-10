@@ -10,5 +10,8 @@ public interface PostDao {
 
     @Query("SELECT * FROM Post")
     List<Post> getAll();
+
+    @Query("SELECT * FROM Post WHERE id = :id")
+    Post getPostById(int id);
 }
 
