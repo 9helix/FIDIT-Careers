@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
+import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link EmployerEditFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class EmployerEditFragment extends Fragment {
-
-
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
 
@@ -33,14 +26,6 @@ public class EmployerEditFragment extends Fragment {
     public EmployerEditFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @return A new instance of fragment EmployerEditFragment.
-     */
 
     public static EmployerEditFragment newInstance(String param1) {
         EmployerEditFragment fragment = new EmployerEditFragment();
@@ -55,7 +40,6 @@ public class EmployerEditFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             String employerEmail = getArguments().getString(ARG_PARAM1);
-            Log.d("EmployerEditFragment", "Employer email: " + employerEmail);
         }
     }
 
@@ -91,23 +75,40 @@ public class EmployerEditFragment extends Fragment {
         EditText editPassConfTxt = getView().findViewById(R.id.editPassConfTxt);
         editPassConfTxt.setText(pass);
 
-
         Button saveButton = getView().findViewById(R.id.saveBtn);
         saveButton.setOnClickListener(view1 -> {
             String newName = nameEditText.getText().toString();
             String newEmail = editEmailTxt.getText().toString();
             String newPass = editPassTxt.getText().toString();
+
+            if(newName.isEmpty()) {
+                nameEditText.setError("Unesite naziv tvrtke");
+                return;
+            }
+            if(newEmail.isEmpty()) {
+                editEmailTxt.setError("Unesite e-mail.");
+                return;
+            }
+            if(newPass.isEmpty()) {
+                editPassTxt.setError("Unesite lozinku.");
+                return;
+            }
             if(!newPass.equals(editPassConfTxt.getText().toString())) {
                 getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), "Lozinke se ne podudaraju.", Toast.LENGTH_SHORT).show());
                 return;
             }
+
             new Thread(() -> {
                 AppDatabase appDatabase = dashboardEmployer.appDatabase;
-                Student student = appDatabase.studentDao().getStudentById(id);
-                student.email = newEmail;
-                student.name = newName;
-                appDatabase.studentDao().updateStudent(student);
-                ((PublicVariable) getActivity().getApplication()).setEmail(newEmail);
+                Employer employer = appDatabase.employerDao().getEmployerById(id);
+
+                employer.employerName = newName;
+                employer.email = newEmail;
+                appDatabase.employerDao().updateEmployer(employer);
+                // update employer name on posts
+                appDatabase.postDao().updateEmployersOnPost(newName, id);
+
+                ((GlobalVariable) getActivity().getApplication()).setEmail(newEmail);
                 getActivity().runOnUiThread(() -> {
                     Toast.makeText(getActivity(), "Informacije ažurirane!", Toast.LENGTH_SHORT).show();
                 });
@@ -117,10 +118,8 @@ public class EmployerEditFragment extends Fragment {
             employerData.put("email", newEmail);
             employerData.put("pass", newPass);
 
-            Log.d("StudentEditFragment", "Student data: " + employerData);
-            Intent in = new Intent(getActivity(),DashboardStudent.class);
+            Intent in = new Intent(getActivity(), DashboardEmployer.class);
             startActivity(in);
-
         });
     }
 }

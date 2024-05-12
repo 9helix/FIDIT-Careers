@@ -2,6 +2,8 @@ package hr.uniri.fiditcareers;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
+
 import java.util.List;
 @Dao
 public interface EmployerDao {
@@ -14,7 +16,12 @@ public interface EmployerDao {
     @Query("SELECT * FROM Employer WHERE `E-mail` = :email")
     Employer getEmployerByEmail(String email);
 
+    @Query("SELECT * FROM Employer WHERE id = :id")
+    Employer getEmployerById(int id);
+
     @Query("DELETE FROM Employer WHERE `E-mail` = :email")
     void deleteEmployerByEmail(String email);
 
+    @Update
+    void updateEmployer(Employer employer);
 }

@@ -23,6 +23,7 @@ public class DetailPost extends Fragment {
     public DetailPost() {
         // Required empty public constructor
     }
+
     public static DetailPost newInstance(int id) {
         DetailPost fragment = new DetailPost();
         Bundle args = new Bundle();

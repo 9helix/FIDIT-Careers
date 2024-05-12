@@ -52,16 +52,16 @@ public class DashboardEmployer extends AppCompatActivity
                 AppDatabase.class, "app-db").build();
 
         new Thread(() -> {
-            String email = ((PublicVariable) this.getApplication()).getEmail();
+            String email = ((GlobalVariable) this.getApplication()).getEmail();
             Employer employer = appDatabase.employerDao().getEmployerByEmail(email);
 
-            TextView employerName, employerEmail, employerContact;
+            // gets the header menu
+            TextView employerName, employerEmail;
             View header = navigationView.getHeaderView(0);
 
             // sets name and email of logged employer on menu
             employerName = header.findViewById(R.id.nameSurnamePlaceholder);
             employerEmail = header.findViewById(R.id.emailPlaceholder);
-
             employerName.setText(employer.employerName);
             employerEmail.setText(employer.email);
 

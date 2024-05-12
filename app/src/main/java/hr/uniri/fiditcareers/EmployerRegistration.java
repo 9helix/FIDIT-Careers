@@ -41,10 +41,10 @@ public class EmployerRegistration extends AppCompatActivity {
         EditText employerNametxt = findViewById(R.id.employerNameTxt);
 
         loginBtn.setOnClickListener(view -> {
+            String employerName = employerNametxt.getText().toString();
             String email = emailTxt.getText().toString();
             String password = passTxt.getText().toString(); // Get password from passTxt
             String confirmPass = confirmPassTxt.getText().toString();
-            String employerName = employerNametxt.getText().toString();
 
             if(employerName.isEmpty()) {
                 employerNametxt.setError("Unesite naziv tvrtke");
@@ -54,8 +54,11 @@ public class EmployerRegistration extends AppCompatActivity {
                 emailTxt.setError("Unesite e-mail.");
                 return;
             }
+            if(password.isEmpty()) {
+                passTxt.setError("Unesite lozinku.");
+                return;
+            }
             if(!password.equals(confirmPass)) {
-                //confirmPassTxt.setError("Lozinke se ne podudaraju.");
                 runOnUiThread(() -> Toast.makeText(EmployerRegistration.this, "Lozinke se ne podudaraju.", Toast.LENGTH_SHORT).show());
                 return;
             }

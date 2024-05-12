@@ -19,7 +19,7 @@ public class PostsDisplayStudent extends Fragment {
     RecyclerView recyclerView;
     MyAdapter adapter;
     SearchView searchView;
-    List<Post> oglasi;
+    List<Post> posts;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,8 +47,8 @@ public class PostsDisplayStudent extends Fragment {
                 AppDatabase.class, "app-db").build();
 
         new Thread(() -> {
-            oglasi = appDatabase.postDao().getAll();
-            adapter = new MyAdapter(getActivity(), oglasi);
+            posts = appDatabase.postDao().getAll();
+            adapter = new MyAdapter(getActivity(), posts);
             recyclerView.setAdapter(adapter);
         }).start();
 
@@ -57,7 +57,7 @@ public class PostsDisplayStudent extends Fragment {
 
     private void searchList(String text){
         List<Post> dataSearchList = new ArrayList<>();
-        for (Post data : oglasi){
+        for (Post data : posts){
             if (data.jobName.toLowerCase().contains(text.toLowerCase())) {
                 dataSearchList.add(data);
             }

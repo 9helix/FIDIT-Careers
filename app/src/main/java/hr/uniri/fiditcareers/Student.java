@@ -6,16 +6,22 @@ import androidx.room.PrimaryKey;
 public class Student {
     @PrimaryKey(autoGenerate = true)
     public int id;
+
     @ColumnInfo(name = "Name")
     public String name;
+
     @ColumnInfo(name = "Surname")
     public String surname;
+
     @ColumnInfo(name = "Year of Study")
     public int studyYear;
+
     @ColumnInfo(name = "About Me")
     public String aboutMe;
+
     @ColumnInfo(name = "E-mail")
     public String email;
+
     @ColumnInfo(name = "Password")
     public String password;
 }

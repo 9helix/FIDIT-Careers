@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +16,6 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link StudentEditFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class StudentEditFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
@@ -30,7 +24,6 @@ public class StudentEditFragment extends Fragment {
     public StudentEditFragment() {
         // Required empty public constructor
     }
-
 
     public static StudentEditFragment newInstance(String studentEmail) {
         StudentEditFragment fragment = new StudentEditFragment();
@@ -45,7 +38,6 @@ public class StudentEditFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             String studentEmail = getArguments().getString(ARG_PARAM1);
-            Log.d("StudentEditFragment", "Student email: " + studentEmail);
         }
     }
 
@@ -68,8 +60,8 @@ public class StudentEditFragment extends Fragment {
         studentId.setText(getString(R.string.account_id, id));
 
         String name = (String) studentData.get("name");
-        EditText nameEditText = getView().findViewById(R.id.editNameText);
-        nameEditText.setText(name);
+        EditText editNameText = getView().findViewById(R.id.editNameText);
+        editNameText.setText(name);
 
         String surname = (String) studentData.get("surname");
         EditText editSurnameTxt = getView().findViewById(R.id.editSurnameTxt);
@@ -96,25 +88,62 @@ public class StudentEditFragment extends Fragment {
 
         Button saveButton = getView().findViewById(R.id.saveBtn);
         saveButton.setOnClickListener(view1 -> {
-            String newName = nameEditText.getText().toString();
+            String newName = editNameText.getText().toString();
             String newSurname = editSurnameTxt.getText().toString();
-            int newYear = Integer.parseInt(editStudyYearTxt.getText().toString());
+            String studyYear = editStudyYearTxt.getText().toString();
             String newEmail = editEmailTxt.getText().toString();
             String newPass = editPassTxt.getText().toString();
             String newAbout = editAboutTxt.getText().toString();
+
+            if(newName.isEmpty()) {
+                editNameText.setError("Unesite ime.");
+                return;
+            }
+            if(newSurname.isEmpty()) {
+                editSurnameTxt.setError("Unesite prezime.");
+                return;
+            }
+            if (studyYear.isEmpty()) {
+                editStudyYearTxt.setError("Unesite godinu studija.");
+                return;
+            } else {
+                int yearOfStudyInt =  Integer.parseInt(studyYear);
+
+                if(yearOfStudyInt < 1 || yearOfStudyInt > 5) {
+                    editStudyYearTxt.setError("Godina studija mora biti u intervalu od 1 do 5.");
+                    return;
+                }
+            }
+            if(newEmail.isEmpty()) {
+                editEmailTxt.setError("Unesite e-mail.");
+                return;
+            }
+            if(newPass.isEmpty()) {
+                editPassTxt.setError("Unesite lozinku.");
+                return;
+            }
+            if(newPass.length()<4) {
+                editPassTxt.setError("Lozinka mora biti duga bar 4 znaka.");
+                return;
+            }
             if(!newPass.equals(editPassConfTxt.getText().toString())) {
                 getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), "Lozinke se ne podudaraju.", Toast.LENGTH_SHORT).show());
                 return;
             }
+
+            int newYear = Integer.parseInt(studyYear);
             new Thread(() -> {
                 AppDatabase appDatabase = dashboardStudent.appDatabase;
                 Student student = appDatabase.studentDao().getStudentById(id);
+
                 student.email = newEmail;
                 student.name = newName;
                 student.surname = newSurname;
                 student.studyYear = newYear;
+                student.aboutMe = newAbout;
                 appDatabase.studentDao().updateStudent(student);
-                ((PublicVariable) getActivity().getApplication()).setEmail(newEmail);
+
+                ((GlobalVariable) getActivity().getApplication()).setEmail(newEmail);
                 getActivity().runOnUiThread(() -> {
                     Toast.makeText(getActivity(), "Informacije ažurirane!", Toast.LENGTH_SHORT).show();
                 });
@@ -127,10 +156,8 @@ public class StudentEditFragment extends Fragment {
             studentData.put("pass", newPass);
             studentData.put("about", newAbout);
 
-            Log.d("StudentEditFragment", "Student data: " + studentData);
-            Intent in = new Intent(getActivity(),DashboardStudent.class);
+            Intent in = new Intent(getActivity(), DashboardStudent.class);
             startActivity(in);
-
         });
     }
 }

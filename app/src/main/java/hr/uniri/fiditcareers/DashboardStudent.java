@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.room.Room;
@@ -51,16 +50,16 @@ public class DashboardStudent extends AppCompatActivity
                 AppDatabase.class, "app-db").build();
 
         new Thread(() -> {
-            String email = ((PublicVariable) this.getApplication()).getEmail();
+            String email = ((GlobalVariable) this.getApplication()).getEmail();
             Student student = appDatabase.studentDao().getStudentByEmail(email);
 
+            // gets the header menu
             TextView studentNameSurname, studentEmail;
             View header = navigationView.getHeaderView(0);
 
             // sets name, surname and email of logged student on menu
             studentNameSurname = header.findViewById(R.id.nameSurnamePlaceholder);
             studentEmail = header.findViewById(R.id.emailPlaceholder);
-
             studentNameSurname.setText(student.name + " " + student.surname);
             studentEmail.setText(student.email);
 

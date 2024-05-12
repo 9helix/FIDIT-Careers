@@ -71,6 +71,10 @@ public class StudentRegistration extends AppCompatActivity {
                 emailTxt.setError("Unesite e-mail.");
                 return;
             }
+            if(password.isEmpty()) {
+                passTxt.setError("Unesite lozinku.");
+                return;
+            }
             if(password.length()<4) {
                 passTxt.setError("Lozinka mora biti duga bar 4 znaka.");
                 return;

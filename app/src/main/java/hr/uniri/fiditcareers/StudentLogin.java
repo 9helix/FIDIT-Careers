@@ -50,8 +50,10 @@ public class StudentLogin extends AppCompatActivity {
                 if (student != null && student.password.equals(password)) {
                     runOnUiThread(() -> Toast.makeText(StudentLogin.this, "Prijava uspješna!", Toast.LENGTH_SHORT).show());
 
-                    // store email in a public variable
-                    ((PublicVariable) this.getApplication()).setEmail(email);
+                    // store email and type in global variables
+                    ((GlobalVariable) this.getApplication()).setEmail(email);
+                    ((GlobalVariable) this.getApplication()).setType("student");
+
                     Intent i = new Intent(StudentLogin.this,DashboardStudent.class);
                     startActivity(i);
                 } else {

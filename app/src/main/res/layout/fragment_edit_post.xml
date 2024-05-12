@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StudentEditFragment">
+    tools:context=".EditPost">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,17 +15,9 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Uredi podatke"
-            android:textSize="34sp" />
-
-        <TextView
-            android:id="@+id/studentIdTxt"
-            android:layout_width="210dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/account_id"
-            android:textAlignment="center"
-            android:textSize="20sp" />
+            android:text="Uredi podatke za oglas"
+            android:layout_marginBottom="20dp"
+            android:textSize="32sp" />
 
         <TableLayout
             android:layout_width="wrap_content"
@@ -43,11 +34,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
                     android:layout_marginBottom="6dp"
-                    android:text="Ime: "
+                    android:text="Naziv posla: "
                     android:textSize="18sp" />
 
                 <EditText
-                    android:id="@+id/editNameText"
+                    android:id="@+id/editJobNameTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -65,16 +56,16 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
                     android:layout_marginBottom="6dp"
-                    android:text="Prezime: "
-                    android:textSize="18sp" />
+                    android:text="Min. god. studija: "
+                    android:textSize="15sp" />
 
                 <EditText
-                    android:id="@+id/editSurnameTxt"
+                    android:id="@+id/editRequiredYearOfStudyTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:ems="10"
-                    android:inputType="text" />
+                    android:inputType="number" />
             </TableRow>
 
             <TableRow
@@ -88,11 +79,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
                     android:layout_marginBottom="6dp"
-                    android:text="O meni: "
-                    android:textSize="18sp" />
+                    android:text="Potrebne vještine: "
+                    android:textSize="16sp" />
 
                 <EditText
-                    android:id="@+id/editAboutTxt"
+                    android:id="@+id/editRequirementsTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -105,6 +96,28 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:text="Način: "
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerOptions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/onsite_online" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/locationTxtRow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:gravity="center">
 
                 <TextView
@@ -112,16 +125,39 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
                     android:layout_marginBottom="6dp"
-                    android:text="Godina studija: "
+                    android:text="Lokacija: "
                     android:textSize="18sp" />
 
                 <EditText
-                    android:id="@+id/editStudyYearTxt"
+                    android:id="@+id/editLocationTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:ems="10"
-                    android:inputType="number" />
+                    android:inputType="text" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="6dp"
+                    android:gravity="bottom|right"
+                    android:text="Opis posla: "
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/editDescTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:ems="10"
+                    android:inputType="textMultiLine" />
             </TableRow>
 
             <TableRow
@@ -154,51 +190,28 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="6dp"
-                    android:gravity="bottom|right"
-                    android:text="Lozinka: "
-                    android:textSize="18sp" />
-
-                <EditText
-                    android:id="@+id/editPassTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:ems="10"
-                    android:inputType="textPassword" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_gravity="bottom|right"
                     android:layout_marginBottom="6dp"
-                    android:text="Potvrda lozinke: "
+                    android:text="Broj telefona: "
                     android:textSize="18sp" />
 
                 <EditText
-                    android:id="@+id/editPassConfTxt"
+                    android:id="@+id/editPhoneNumberTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:ems="10"
-                    android:inputType="textPassword" />
+                    android:inputType="text" />
             </TableRow>
         </TableLayout>
 
         <Button
-            android:id="@+id/saveBtn"
+            android:id="@+id/savePostBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:backgroundTint="@color/gray"
-            android:text="Spremi" />
+            android:text="Ažuriraj oglas" />
 
     </LinearLayout>
 

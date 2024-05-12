@@ -50,8 +50,10 @@ public class EmployerLogin extends AppCompatActivity {
                 if (employer != null && employer.password.equals(password)) {
                     runOnUiThread(() -> Toast.makeText(EmployerLogin.this, "Prijava uspješna!", Toast.LENGTH_SHORT).show());
 
-                    // store email in a public variable
-                    ((PublicVariable) this.getApplication()).setEmail(email);
+                    // store email and type in global variables
+                    ((GlobalVariable) this.getApplication()).setEmail(email);
+                    ((GlobalVariable) this.getApplication()).setType("employer");
+
                     Intent i = new Intent(EmployerLogin.this,DashboardEmployer.class);
                     startActivity(i);
                 } else {

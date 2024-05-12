@@ -1,10 +1,10 @@
 package hr.uniri.fiditcareers;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,11 +99,8 @@ public class AddPost extends Fragment {
                 return;
             }
 
-            Log.d("AddPost", "online ili onsite => " + onsiteOnline);
-            Log.d("AddPost", "lokacija => " + location);
-
             new Thread(() -> {
-                String employerEmail = ((PublicVariable) getActivity().getApplication()).getEmail();
+                String employerEmail = ((GlobalVariable) getActivity().getApplication()).getEmail();
                 Employer employer = appDatabase.employerDao().getEmployerByEmail(employerEmail);
                 int reqYearOfStudy =  Integer.parseInt(requiredYearOfStudy);
 
@@ -135,7 +132,8 @@ public class AddPost extends Fragment {
                 appDatabase.postDao().insert(newPost);
 
                 getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), "Uspješno stvoren oglas!", Toast.LENGTH_SHORT).show());
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostsDisplayEmployer()).commit();
+                Intent in = new Intent(getActivity(), DashboardEmployer.class);
+                startActivity(in);
             }).start();
 
         });

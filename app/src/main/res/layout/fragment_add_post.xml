@@ -42,6 +42,7 @@
             android:layout_marginTop="8dp"
             android:ems="10"
             android:hint="Potrebne vještine"
+            android:inputType="textMultiLine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/requiredYearOfStudyTxt" />
@@ -51,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@android:color/darker_gray"
+            android:backgroundTint="@color/gray"
             android:text="Stvori oglas"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,6 +65,7 @@
             android:layout_marginTop="8dp"
             android:ems="10"
             android:hint="Opis posla"
+            android:inputType="textMultiLine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/locationTxt" />
