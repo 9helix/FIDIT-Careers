@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +42,7 @@ public class PostsDisplayStudent extends Fragment {
             }
         });
 
+        TextView noPostsMessage = parentHolder.findViewById(R.id.noPostsText);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
         appDatabase = Room.databaseBuilder(getActivity().getApplicationContext(),
@@ -48,8 +50,13 @@ public class PostsDisplayStudent extends Fragment {
 
         new Thread(() -> {
             posts = appDatabase.postDao().getAll();
-            adapter = new MyAdapter(getActivity(), posts);
-            recyclerView.setAdapter(adapter);
+            if (posts.isEmpty()) {
+                noPostsMessage.setVisibility(View.VISIBLE);
+            } else {
+                adapter = new MyAdapter(getActivity(), posts);
+                recyclerView.setAdapter(adapter);
+                noPostsMessage.setVisibility(View.GONE);
+            }
         }).start();
 
         return parentHolder;

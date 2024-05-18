@@ -82,28 +82,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
             // when trash icon is clicked
             holder.internshipDelete.setOnClickListener(view -> {
-                /*
-                DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
-
-                    switch (which){
-                        case DialogInterface.BUTTON_POSITIVE: //Yes button clicked
-                            new Thread(() -> {
-                                //appDatabase.postDao().deletePostById(postId);
-                                Log.d("PostDisplayEmployer", "Obrisan oglas: "+ postId);
-                            });
-                            break;
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            //No button clicked
-                            break;
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Jeste li sigurni da želite izbrisati oglas?")
-                        .setPositiveButton("Yes", dialogClickListener)
-                        .setNegativeButton("No", dialogClickListener).show();
-
-                };
-                */
+                DeletePost dialogFragment = DeletePost.newInstance(postId);
+                dialogFragment.show(((FragmentActivity)context).getSupportFragmentManager(),"Obriši oglas");
             });
         }
     }

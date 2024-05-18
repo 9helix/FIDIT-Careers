@@ -10,6 +10,8 @@ import androidx.room.Room;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -28,7 +30,7 @@ public class PostsDisplayEmployer extends Fragment {
         fab.setOnClickListener(view -> {
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddPost()).commit();
         });
-
+        TextView noPostsMessage = parentHolder.findViewById(R.id.noPostsText);
         recyclerView = parentHolder.findViewById(R.id.recyclerView);
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 1);
@@ -41,8 +43,13 @@ public class PostsDisplayEmployer extends Fragment {
             Employer employer = appDatabase.employerDao().getEmployerByEmail(employerEmail);
 
             List<Post> posts = appDatabase.postDao().getPostsByEmployerId(employer.id);
-            adapter = new MyAdapter(getActivity(), posts);
-            recyclerView.setAdapter(adapter);
+            if (posts.isEmpty()) {
+                noPostsMessage.setVisibility(View.VISIBLE);
+            } else {
+                adapter = new MyAdapter(getActivity(), posts);
+                recyclerView.setAdapter(adapter);
+                noPostsMessage.setVisibility(View.GONE);
+            }
         }).start();
 
         return parentHolder;
