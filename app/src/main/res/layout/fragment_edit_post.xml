@@ -5,214 +5,220 @@
     android:layout_height="match_parent"
     tools:context=".EditPost">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_marginTop="50dp">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Uredi podatke za oglas"
-            android:layout_marginBottom="20dp"
-            android:textSize="32sp" />
-
-        <TableLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="vertical">
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal">
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Uredi podatke za oglas"
+                android:layout_marginBottom="20dp"
+                android:textSize="32sp" />
 
-                <TextView
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
-                    android:layout_marginBottom="6dp"
-                    android:text="Naziv posla: "
-                    android:textSize="18sp" />
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal">
 
-                <EditText
-                    android:id="@+id/editJobNameTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:ems="10"
-                    android:inputType="text" />
-            </TableRow>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|right"
+                        android:layout_marginBottom="6dp"
+                        android:text="Naziv posla: "
+                        android:textSize="18sp" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal">
+                    <EditText
+                        android:id="@+id/editJobNameTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:ems="10"
+                        android:inputType="text" />
+                </TableRow>
 
-                <TextView
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
-                    android:layout_marginBottom="6dp"
-                    android:text="Min. god. studija: "
-                    android:textSize="15sp" />
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal">
 
-                <EditText
-                    android:id="@+id/editRequiredYearOfStudyTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:ems="10"
-                    android:inputType="number" />
-            </TableRow>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|right"
+                        android:layout_marginBottom="6dp"
+                        android:text="Min. god. studija: "
+                        android:textSize="15sp" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal">
+                    <EditText
+                        android:id="@+id/editRequiredYearOfStudyTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:ems="10"
+                        android:inputType="number" />
+                </TableRow>
 
-                <TextView
-                    android:id="@+id/textView3"
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
-                    android:layout_marginBottom="6dp"
-                    android:text="Potrebne vještine: "
-                    android:textSize="16sp" />
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal">
 
-                <EditText
-                    android:id="@+id/editRequirementsTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:ems="10"
-                    android:gravity="start|top"
-                    android:inputType="textMultiLine"
-                    android:maxLength="300" />
-            </TableRow>
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|right"
+                        android:layout_marginBottom="6dp"
+                        android:text="Potrebne vještine: "
+                        android:textSize="16sp" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="5dp"
-                android:gravity="center">
+                    <EditText
+                        android:id="@+id/editRequirementsTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:ems="10"
+                        android:gravity="start|top"
+                        android:inputType="textMultiLine"
+                        android:maxLength="300" />
+                </TableRow>
 
-                <TextView
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
-                    android:text="Način: "
-                    android:textSize="18sp" />
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center">
 
-                <Spinner
-                    android:id="@+id/spinnerOptions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/onsite_online" />
-            </TableRow>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|right"
+                        android:text="Način: "
+                        android:textSize="18sp" />
 
-            <TableRow
-                android:id="@+id/locationTxtRow"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
+                    <Spinner
+                        android:id="@+id/spinnerOptions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/onsite_online" />
+                </TableRow>
 
-                <TextView
+                <TableRow
+                    android:id="@+id/locationTxtRow"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
-                    android:layout_marginBottom="6dp"
-                    android:text="Lokacija: "
-                    android:textSize="18sp" />
+                    android:layout_height="match_parent"
+                    android:gravity="center">
 
-                <EditText
-                    android:id="@+id/editLocationTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:ems="10"
-                    android:inputType="text" />
-            </TableRow>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|right"
+                        android:layout_marginBottom="6dp"
+                        android:text="Lokacija: "
+                        android:textSize="18sp" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
+                    <EditText
+                        android:id="@+id/editLocationTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:ems="10"
+                        android:inputType="text" />
+                </TableRow>
 
-                <TextView
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="6dp"
-                    android:gravity="bottom|right"
-                    android:text="Opis posla: "
-                    android:textSize="18sp" />
+                    android:layout_height="match_parent"
+                    android:gravity="center">
 
-                <EditText
-                    android:id="@+id/editDescTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:ems="10"
-                    android:inputType="textMultiLine" />
-            </TableRow>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="6dp"
+                        android:gravity="bottom|right"
+                        android:text="Opis posla: "
+                        android:textSize="18sp" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
+                    <EditText
+                        android:id="@+id/editDescTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:ems="10"
+                        android:inputType="textMultiLine" />
+                </TableRow>
 
-                <TextView
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
-                    android:layout_marginBottom="6dp"
-                    android:text="E-mail: "
-                    android:textSize="18sp" />
+                    android:layout_height="match_parent"
+                    android:gravity="center">
 
-                <EditText
-                    android:id="@+id/editEmailTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:ems="10"
-                    android:inputType="textEmailAddress" />
-            </TableRow>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|right"
+                        android:layout_marginBottom="6dp"
+                        android:text="E-mail: "
+                        android:textSize="18sp" />
 
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center">
+                    <EditText
+                        android:id="@+id/editEmailTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:ems="10"
+                        android:inputType="textEmailAddress" />
+                </TableRow>
 
-                <TextView
+                <TableRow
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom|right"
-                    android:layout_marginBottom="6dp"
-                    android:text="Broj telefona: "
-                    android:textSize="18sp" />
+                    android:layout_height="match_parent"
+                    android:gravity="center">
 
-                <EditText
-                    android:id="@+id/editPhoneNumberTxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:ems="10"
-                    android:inputType="text" />
-            </TableRow>
-        </TableLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|right"
+                        android:layout_marginBottom="6dp"
+                        android:text="Broj telefona: "
+                        android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/savePostBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:backgroundTint="@color/gray"
-            android:text="Ažuriraj oglas" />
+                    <EditText
+                        android:id="@+id/editPhoneNumberTxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:ems="10"
+                        android:inputType="text" />
+                </TableRow>
+            </TableLayout>
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/savePostBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="40dp"
+                android:backgroundTint="@color/gray"
+                android:text="Ažuriraj oglas" />
 
+        </LinearLayout>
+    </ScrollView>
 </FrameLayout>
