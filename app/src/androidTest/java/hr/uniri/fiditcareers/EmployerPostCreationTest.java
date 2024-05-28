@@ -77,9 +77,12 @@ public class EmployerPostCreationTest {
         // Click on the submit button
         Espresso.onView(ViewMatchers.withId(R.id.postBtn)).perform(ViewActions.click());
 
+        Espresso.onView(ViewMatchers.withId(R.id.internshipDelete)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.yesBtn)).perform(ViewActions.click());
+
+
         Espresso.onView(ViewMatchers.withId(R.id.drawer_layout)).perform(DrawerActions.open());
         Espresso.onView(ViewMatchers.withId(R.id.nav_view)).perform(NavigationViewActions.navigateTo(R.id.nav_logout));
-
 
     }
 }
