@@ -41,21 +41,5 @@ public class EmployerRegistrationTest {
 
         // Click on the registration button
         Espresso.onView(ViewMatchers.withId(R.id.loginBtn)).perform(ViewActions.click());
-
-/*
-
-        // After registration, simulate the login process
-        // Click on the email EditText, enter the registered email address
-        Espresso.onView(ViewMatchers.withId(R.id.editEmailTxt))
-                .perform(ViewActions.click())
-                .perform(ViewActions.typeText("ris@ris.hr"), ViewActions.closeSoftKeyboard());
-
-        // Click on the password EditText, enter the registered password
-        Espresso.onView(ViewMatchers.withId(R.id.editPassTxt))
-                .perform(ViewActions.click())
-                .perform(ViewActions.typeText("1234"), ViewActions.closeSoftKeyboard());
-
-        // Click on the login button
-        Espresso.onView(ViewMatchers.withId(R.id.loginBtn)).perform(ViewActions.click());*/
     }
 }
