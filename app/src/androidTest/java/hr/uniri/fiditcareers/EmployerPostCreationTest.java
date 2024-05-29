@@ -25,9 +25,6 @@ public class EmployerPostCreationTest {
     @Test
     public void testLoginAndPostCreation() {
         Result result = new JUnitCore().run(EmployerRegistrateLoginTest.class);
-        // Login process
-        // Click on the email EditText, enter the registered email address
-        System.out.println("Result: " + result.wasSuccessful());
 
         // Post creation process
         // Click on the new post button
