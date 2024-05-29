@@ -17,6 +17,9 @@
       <SelectionState runConfigName="StudentLoginEditDataTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+      <SelectionState runConfigName="fiditcareers">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
     </selectionStates>
   </component>
 </project>

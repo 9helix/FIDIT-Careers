@@ -81,7 +81,7 @@ public class StudentLoginEditDataTest {
                 .perform(ViewActions.typeText("Marin"), ViewActions.closeSoftKeyboard());
 
         name = "Grzinic";
-        // delete name in the first text field
+        // delete name in the second text field
         for(int i=0; i < name.length(); i++) {
             Espresso.onView(ViewMatchers.withId(R.id.editSurnameTxt))
                     .perform(click())

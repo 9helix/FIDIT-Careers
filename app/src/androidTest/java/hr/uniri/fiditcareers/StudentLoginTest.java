@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
 //unit test
 @RunWith(AndroidJUnit4.class)
 
-public class StudentLoginTest {
+    public class StudentLoginTest {
 
     @Rule
     public ActivityScenarioRule<StudentLogin> activityRule =
