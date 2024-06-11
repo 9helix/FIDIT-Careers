@@ -9,6 +9,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class DashboardEmployer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -90,6 +92,12 @@ public class DashboardEmployer extends AppCompatActivity
                 //Toast.makeText(this, "Settings clicked!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_logout:
+                AtomicReference<SharedPreferences> sharedPreferences = new AtomicReference<>(getSharedPreferences("MySharedPref", MODE_PRIVATE));
+                SharedPreferences.Editor myEdit = sharedPreferences.get().edit();
+                myEdit.putBoolean("isLoggedIn", false);
+                myEdit.putString("email", ""); // store email
+                myEdit.putString("type", "");
+                myEdit.apply();
                 Toast.makeText(this, "Uspješna odjava!", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(DashboardEmployer.this,EmployerLogin.class);
                 startActivity(i);

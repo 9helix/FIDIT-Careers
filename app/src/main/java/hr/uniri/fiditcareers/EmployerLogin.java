@@ -1,8 +1,10 @@
 package hr.uniri.fiditcareers;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -14,6 +16,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.room.Room;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 public class EmployerLogin extends AppCompatActivity {
     private AppDatabase appDatabase;
@@ -28,6 +32,8 @@ public class EmployerLogin extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        AtomicReference<SharedPreferences> sharedPreferences = new AtomicReference<>(getSharedPreferences("MySharedPref", MODE_PRIVATE));
 
         appDatabase = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "app-db").build();
@@ -49,6 +55,15 @@ public class EmployerLogin extends AppCompatActivity {
                 // If count is greater than 0, an employer with the given email exists
                 if (employer != null && employer.password.equals(password)) {
                     runOnUiThread(() -> Toast.makeText(EmployerLogin.this, "Prijava uspješna!", Toast.LENGTH_SHORT).show());
+
+                    CheckBox remember = findViewById(R.id.checkBox);
+                    if(remember.isChecked()){
+                        SharedPreferences.Editor myEdit = sharedPreferences.get().edit();
+                        myEdit.putBoolean("isLoggedIn", true);
+                        myEdit.putString("email", email); // store email
+                        myEdit.putString("type", "employer");
+                        myEdit.apply();
+                    }
 
                     // store email and type in global variables
                     ((GlobalVariable) this.getApplication()).setEmail(email);

@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.room.Room;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class DashboardStudent extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -85,6 +87,12 @@ public class DashboardStudent extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
                 break;
             case R.id.nav_logout:
+                AtomicReference<SharedPreferences> sharedPreferences = new AtomicReference<>(getSharedPreferences("MySharedPref", MODE_PRIVATE));
+                SharedPreferences.Editor myEdit = sharedPreferences.get().edit();
+                myEdit.putBoolean("isLoggedIn", false);
+                myEdit.putString("email", ""); // store email
+                myEdit.putString("type", "");
+                myEdit.apply();
                 Toast.makeText(this, "Uspješna odjava!", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(DashboardStudent.this,StudentLogin.class);
                 startActivity(i);
