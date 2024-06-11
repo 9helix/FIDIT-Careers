@@ -8,13 +8,8 @@ import androidx.room.Room;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class DetailPost extends Fragment {
     int postId;
@@ -46,7 +41,15 @@ public class DetailPost extends Fragment {
         View parentHolder = inflater.inflate(R.layout.fragment_detail_post, container, false);
         appDatabase = Room.databaseBuilder(getActivity().getApplicationContext(),
                 AppDatabase.class, "app-db").build();
+        Button backButton = parentHolder.findViewById(R.id.backBtn);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PostsDisplayStudent homeFragment = new PostsDisplayStudent();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
 
+            }
+        });
         TextView detailJobName = parentHolder.findViewById(R.id.detailJobName);
         TextView detailEmployer = parentHolder.findViewById(R.id.detailEmployer);
         TextView detailDate = parentHolder.findViewById(R.id.detailDate);

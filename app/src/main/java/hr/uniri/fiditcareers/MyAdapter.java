@@ -56,7 +56,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
 
         // get id for each post
         int postId = dataList.get(holder.getAdapterPosition()).id;
-        if (type == "student") { // display of posts for students
+        if (type.equals("student")) { // display of posts for students
             holder.internshipEdit.setVisibility(View.GONE);
             holder.internshipDelete.setVisibility(View.GONE);
             holder.internshipEmployer.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
