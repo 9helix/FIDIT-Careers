@@ -4,6 +4,12 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 @Entity(foreignKeys = @ForeignKey(entity = Employer.class,
         parentColumns = "id",
         childColumns = "Employer Id"))
@@ -44,5 +50,21 @@ public class Post {
 
     @ColumnInfo(name = "Employer Name")
     public String employerName;
+
+
+    @ColumnInfo(name = "Applied Student Emails")
+    public String appliedStudentIds;
+
+    public List<String> getAppliedStudentIdsList() {
+        if (appliedStudentIds == null || appliedStudentIds.isEmpty()) {
+            return new ArrayList<String>();
+        }
+        return Stream.of(appliedStudentIds.split(","))
+                .collect(Collectors.toList());
+    }
+
+    public void setAppliedStudentIdsList(List<String> studentIds) {
+        this.appliedStudentIds = String.join(",", studentIds);
+    }
 }
 

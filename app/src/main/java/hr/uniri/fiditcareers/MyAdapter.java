@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Button;
 
+import java.util.ArrayList;
 import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -57,6 +59,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
         // get id for each post
         int postId = dataList.get(holder.getAdapterPosition()).id;
         if (type.equals("student")) { // display of posts for students
+            holder.appliedStudentsButton.setVisibility(View.GONE);
             holder.internshipEdit.setVisibility(View.GONE);
             holder.internshipDelete.setVisibility(View.GONE);
             holder.internshipEmployer.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -69,6 +72,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
                         .beginTransaction().replace(R.id.fragment_container, fragment).commit();
             });
         } else { // display of posts for employers
+            holder.appliedStudentsButton.setVisibility(View.VISIBLE);
             holder.internshipEdit.setVisibility(View.VISIBLE);
             holder.internshipDelete.setVisibility(View.VISIBLE);
             holder.internshipEmployer.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
@@ -86,6 +90,40 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
                 dialogFragment.show(((FragmentActivity)context).getSupportFragmentManager(),"Obriši oglas");
             });
         }
+
+        Button appliedStudentsButton = holder.appliedStudentsButton;
+        appliedStudentsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(() -> {
+                    //create appdatabase
+                    AppDatabase appDatabase = Room.databaseBuilder(context,
+                            AppDatabase.class, "app-db").build();
+                    // Retrieve the current post
+                    Post post = appDatabase.postDao().getPostById(postId);
+
+                    // Get the list of applied student emails from the post
+                    List<String> appliedStudentEmails = post.getAppliedStudentIdsList();
+
+                    List<String> appliedStudentData= new ArrayList<>();
+                    for (String email : appliedStudentEmails) {
+                        Student student=appDatabase.studentDao().getStudentByEmail(email);
+                        appliedStudentData.add(student.name+" "+student.surname+" - "+email);
+                    }
+                    // Convert the list to a string with each email separated by a newline
+                    String appliedStudentEmailsString = String.join("\n", appliedStudentData);
+
+                    // Display the emails in a dialog on the main thread
+                    ((FragmentActivity)context).runOnUiThread(() -> {
+                        new AlertDialog.Builder(context)
+                                .setTitle("Prijavljeni studenti")
+                                .setMessage(appliedStudentEmailsString)
+                                .setPositiveButton(android.R.string.ok, null)
+                                .show();
+                    });
+                }).start();
+            }
+        });
     }
 
     @Override
@@ -99,7 +137,7 @@ class MyViewHolder extends RecyclerView.ViewHolder{
             internshipOnsiteOnline, internshipLocation, internshipReqYearOfStudy;
     ImageView internshipEdit, internshipDelete;
     CardView recCard;
-
+    Button appliedStudentsButton;
     public MyViewHolder(@NonNull View itemView) {
         super(itemView);
         // initializing elements from recyle item
@@ -113,5 +151,6 @@ class MyViewHolder extends RecyclerView.ViewHolder{
         internshipEdit = itemView.findViewById(R.id.internshipEdit);
         internshipDelete = itemView.findViewById(R.id.internshipDelete);
         recCard = itemView.findViewById(R.id.recCard);
+        appliedStudentsButton = itemView.findViewById(R.id.appliedStudentsButton);
     }
 }

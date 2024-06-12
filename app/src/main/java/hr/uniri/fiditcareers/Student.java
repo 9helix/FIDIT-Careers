@@ -25,4 +25,3 @@ public class Student {
     @ColumnInfo(name = "Password")
     public String password;
 }
-

@@ -5,11 +5,15 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DetailPost extends Fragment {
     int postId;
@@ -40,7 +44,7 @@ public class DetailPost extends Fragment {
                              Bundle savedInstanceState) {
         View parentHolder = inflater.inflate(R.layout.fragment_detail_post, container, false);
         appDatabase = Room.databaseBuilder(getActivity().getApplicationContext(),
-                AppDatabase.class, "app-db").build();
+                AppDatabase.class, "app-db").allowMainThreadQueries().build();
         Button backButton = parentHolder.findViewById(R.id.backBtn);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +54,82 @@ public class DetailPost extends Fragment {
 
             }
         });
+
+        Button applyButton = parentHolder.findViewById(R.id.applyButton);
+        Button appliedButton = parentHolder.findViewById(R.id.appliedButton);
+
+        new Thread(() -> {
+            // Retrieve the current student's email
+            String currentStudentEmail = ((GlobalVariable) getActivity().getApplication()).getEmail();
+
+            // Retrieve the current post
+            Post post = appDatabase.postDao().getPostById(postId);
+
+            // Get the list of applied student emails from the post
+            List<String> appliedStudentIds = post.getAppliedStudentIdsList();
+            applyButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if(appliedStudentIds == null){
+                        //List<String> l1 = new ArrayList<String>();
+                        appliedStudentIds.add(currentStudentEmail);
+
+                        post.setAppliedStudentIdsList(appliedStudentIds);
+                    }
+                    else{
+                        appliedStudentIds.add(currentStudentEmail);
+                        post.setAppliedStudentIdsList(appliedStudentIds);}
+
+                    // Update the post in the database
+                    appDatabase.postDao().updatePost(post);
+                    applyButton.setVisibility(View.GONE);
+                    appliedButton.setVisibility(View.VISIBLE);
+                    Log.d("appliedStudents apply", post.appliedStudentIds);
+                }
+            });
+            appliedButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new Thread(() -> {
+                        // Retrieve the current student's email
+                        String currentStudentEmail = ((GlobalVariable) getActivity().getApplication()).getEmail();
+
+                        // Retrieve the current post
+                        Post post = appDatabase.postDao().getPostById(postId);
+
+
+                        // Remove the current student's email from the list
+                        appliedStudentIds.remove(currentStudentEmail);
+                        post.setAppliedStudentIdsList(appliedStudentIds);
+
+                        // Update the post in the database
+                        appDatabase.postDao().updatePost(post);
+
+                        // Update the UI on the main thread
+                        getActivity().runOnUiThread(() -> {
+                            appliedButton.setVisibility(View.GONE);
+                            applyButton.setVisibility(View.VISIBLE);
+                        });
+                        Log.d("appliedStudents remove", post.appliedStudentIds);
+                    }).start();
+
+                }
+});
+            // Check if the list contains the current student's email
+            if (appliedStudentIds!=null && appliedStudentIds.contains(currentStudentEmail)) {
+                // If the student has already applied, disable the apply button or change its text
+                getActivity().runOnUiThread(() -> {
+                    applyButton.setVisibility(View.GONE);
+                    appliedButton.setVisibility(View.VISIBLE);
+                });
+            } else {
+                applyButton.setVisibility(View.VISIBLE);
+
+            }}).start();
+
+
+
         TextView detailJobName = parentHolder.findViewById(R.id.detailJobName);
         TextView detailEmployer = parentHolder.findViewById(R.id.detailEmployer);
         TextView detailDate = parentHolder.findViewById(R.id.detailDate);

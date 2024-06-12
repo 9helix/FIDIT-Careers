@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".DetailPost">
 
     <LinearLayout
@@ -20,9 +21,12 @@
 
             <Button
                 android:id="@+id/backBtn"
+                style="?attr/materialIconButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nazad" />
+                app:icon="@drawable/baseline_arrow_back_24"
+                android:contentDescription="Povratak"/>
+
         </LinearLayout>
 
         <TextView
@@ -284,6 +288,25 @@
                 android:textColor="@color/black" />
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/applyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:text="Prijavi se"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/appliedButton"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:text="Prijavljeno"
+            android:visibility="gone" />
 
     </LinearLayout>
 
