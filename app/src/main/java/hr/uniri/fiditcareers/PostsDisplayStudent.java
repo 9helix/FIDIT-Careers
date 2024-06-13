@@ -2,6 +2,7 @@ package hr.uniri.fiditcareers;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,13 +23,20 @@ public class PostsDisplayStudent extends Fragment {
     SearchView searchView;
     List<Post> posts;
 
+    public PostsDisplayStudent() {
+        // Required empty public constructor
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View parentHolder = inflater.inflate(R.layout.fragment_posts_display_student, container, false);
+        return inflater.inflate(R.layout.fragment_posts_display_student, container, false);
+    }
 
-        recyclerView = parentHolder.findViewById(R.id.recyclerView);
-        searchView = parentHolder.findViewById(R.id.search);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        recyclerView = getView().findViewById(R.id.recyclerView);
+        searchView = getView().findViewById(R.id.search);
         searchView.clearFocus();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -42,7 +50,7 @@ public class PostsDisplayStudent extends Fragment {
             }
         });
 
-        TextView noPostsMessage = parentHolder.findViewById(R.id.noPostsText);
+        TextView noPostsMessage = getView().findViewById(R.id.noPostsText);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 1);
         recyclerView.setLayoutManager(gridLayoutManager);
         appDatabase = Room.databaseBuilder(getActivity().getApplicationContext(),
@@ -50,18 +58,19 @@ public class PostsDisplayStudent extends Fragment {
 
         new Thread(() -> {
             posts = appDatabase.postDao().getAll();
-            if (posts.isEmpty()) {
-                noPostsMessage.setVisibility(View.VISIBLE);
-            } else {
-                adapter = new MyAdapter(getActivity(), posts);
-                recyclerView.setAdapter(adapter);
-                noPostsMessage.setVisibility(View.GONE);
-            }
+            getActivity().runOnUiThread(() -> {
+                if (posts.isEmpty()) {
+                    noPostsMessage.setVisibility(View.VISIBLE);
+                } else {
+                    adapter = new MyAdapter(getActivity(), posts);
+                    recyclerView.setAdapter(adapter);
+                    noPostsMessage.setVisibility(View.GONE);
+                }
+            });
         }).start();
-
-        return parentHolder;
     }
 
+    // searches posts by name of the job
     private void searchList(String text){
         List<Post> dataSearchList = new ArrayList<>();
         for (Post data : posts){

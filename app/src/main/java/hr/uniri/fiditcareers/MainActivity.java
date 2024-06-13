@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
             Intent i = new Intent(MainActivity.this,StudentLogin.class);
             startActivity(i);
-/*
+            /*
             if (isLogin) {
                 if (isStudent) {            // Create a new thread to perform database operations
                     new Thread(() -> {

@@ -2,6 +2,8 @@ package hr.uniri.fiditcareers;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
@@ -21,23 +23,30 @@ import java.util.Date;
 public class AddPost extends Fragment {
     private AppDatabase appDatabase;
 
+    public AddPost() {
+        // Required empty public constructor
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_add_post, container, false);
+    }
 
-        View parentHolder = inflater.inflate(R.layout.fragment_add_post, container, false);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         appDatabase = Room.databaseBuilder(getActivity().getApplicationContext(),
                 AppDatabase.class, "app-db").build();
 
-        Button postBtn = parentHolder.findViewById(R.id.postBtn);
-        EditText jobNameTxt = parentHolder.findViewById(R.id.jobNameTxt);
-        EditText requiredYearOfStudyTxt = parentHolder.findViewById(R.id.requiredYearOfStudyTxt);
-        EditText requirementsTxt = parentHolder.findViewById(R.id.requirementsTxt);
-        EditText descriptionTxt = parentHolder.findViewById(R.id.descriptionTxt);
-        EditText emailTxt = parentHolder.findViewById(R.id.emailTxt);
-        EditText phoneNumberTxt = parentHolder.findViewById(R.id.phoneNumberTxt);
-        Spinner spinnerOption = parentHolder.findViewById(R.id.spinnerOptions);
-        EditText locationTxt = parentHolder.findViewById(R.id.locationTxt);
+        Button postBtn = getView().findViewById(R.id.postBtn);
+        EditText jobNameTxt = getView().findViewById(R.id.jobNameTxt);
+        EditText requiredYearOfStudyTxt = getView().findViewById(R.id.requiredYearOfStudyTxt);
+        EditText requirementsTxt = getView().findViewById(R.id.requirementsTxt);
+        EditText descriptionTxt = getView().findViewById(R.id.descriptionTxt);
+        EditText emailTxt = getView().findViewById(R.id.emailTxt);
+        EditText phoneNumberTxt = getView().findViewById(R.id.phoneNumberTxt);
+        Spinner spinnerOption = getView().findViewById(R.id.spinnerOptions);
+        EditText locationTxt = getView().findViewById(R.id.locationTxt);
 
         // when dropdown option is selected
         spinnerOption.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -55,7 +64,7 @@ public class AddPost extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        postBtn.setOnClickListener(view -> {
+        postBtn.setOnClickListener(view1 -> {
             String jobName = jobNameTxt.getText().toString();
             String requiredYearOfStudy = requiredYearOfStudyTxt.getText().toString();
             String requirements = requirementsTxt.getText().toString();
@@ -135,9 +144,6 @@ public class AddPost extends Fragment {
                 Intent in = new Intent(getActivity(), DashboardEmployer.class);
                 startActivity(in);
             }).start();
-
         });
-
-        return parentHolder;
     }
 }

@@ -51,7 +51,6 @@ public class Post {
     @ColumnInfo(name = "Employer Name")
     public String employerName;
 
-
     @ColumnInfo(name = "Applied Student Emails")
     public String appliedStudentIds;
 

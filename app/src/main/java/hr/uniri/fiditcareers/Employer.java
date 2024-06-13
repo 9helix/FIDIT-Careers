@@ -6,10 +6,13 @@ import androidx.room.PrimaryKey;
 public class Employer {
     @PrimaryKey(autoGenerate = true)
     public int id;
+
     @ColumnInfo(name = "Employer Name")
     public String employerName;
+
     @ColumnInfo(name = "E-mail")
     public String email;
+
     @ColumnInfo(name = "Password")
     public String password;
 }

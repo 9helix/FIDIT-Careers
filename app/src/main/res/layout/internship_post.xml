@@ -58,7 +58,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:paddingTop="3dp"
-                        android:textColor="@color/gray" />
+                        android:textColor="@color/blue" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -115,7 +115,7 @@
                     android:layout_weight="1"
                     android:paddingTop="5dp"
                     android:paddingLeft="3dp"
-                    android:textColor="@color/gray" />
+                    android:textColor="@color/blue" />
 
                 <LinearLayout
                     android:layout_width="180dp"
@@ -138,7 +138,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:paddingTop="3dp"
-                        android:textColor="@color/gray" />
+                        android:textColor="@color/blue" />
 
                 </LinearLayout>
 
@@ -162,7 +162,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:paddingTop="3dp"
-                        android:textColor="@color/gray" />
+                        android:textColor="@color/blue" />
 
                 </LinearLayout>
 
@@ -172,6 +172,7 @@
                 android:id="@+id/appliedStudentsButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="Prijavljeni studenti"
                 />
         </LinearLayout>

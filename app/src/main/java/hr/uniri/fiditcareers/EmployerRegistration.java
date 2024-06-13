@@ -32,6 +32,7 @@ public class EmployerRegistration extends AppCompatActivity {
         appDatabase = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "app-db").build();
 
+        // get all form fields
         Button loginBtn = findViewById(R.id.loginBtn);
         EditText emailTxt = findViewById(R.id.editEmailTxt);
         EditText passTxt = findViewById(R.id.editPassTxt);
@@ -40,6 +41,7 @@ public class EmployerRegistration extends AppCompatActivity {
         EditText confirmPassTxt = findViewById(R.id.confirmPassTxt);
         EditText employerNametxt = findViewById(R.id.employerNameTxt);
 
+        // when registration button is clicked
         loginBtn.setOnClickListener(view -> {
             String employerName = employerNametxt.getText().toString();
             String email = emailTxt.getText().toString();
@@ -70,7 +72,6 @@ public class EmployerRegistration extends AppCompatActivity {
                 // If count is greater than 0, an employer with the given email exists
                 if (employer != null) {
                     runOnUiThread(() -> Toast.makeText(EmployerRegistration.this, "Poslodavac s tom e-mail adresom već postoji.", Toast.LENGTH_SHORT).show());
-
                 } else {
                     // Create a new employer object
                     Employer newEmployer = new Employer();
@@ -82,6 +83,7 @@ public class EmployerRegistration extends AppCompatActivity {
                     appDatabase.employerDao().insert(newEmployer);
                     runOnUiThread(() -> Toast.makeText(EmployerRegistration.this, "Registracija uspjela.", Toast.LENGTH_SHORT).show());
 
+                    // Redirect user to the login page
                     Intent i = new Intent(EmployerRegistration.this,EmployerLogin.class);
                     startActivity(i);
                 }

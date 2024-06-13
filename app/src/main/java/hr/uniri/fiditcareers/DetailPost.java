@@ -2,6 +2,7 @@ package hr.uniri.fiditcareers;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.room.Room;
 
@@ -26,6 +27,7 @@ public class DetailPost extends Fragment {
     public static DetailPost newInstance(int id) {
         DetailPost fragment = new DetailPost();
         Bundle args = new Bundle();
+        // store selected post's ID as argument
         args.putInt("id", id);
         fragment.setArguments(args);
         return fragment;
@@ -35,6 +37,7 @@ public class DetailPost extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            // get stored post's ID
             postId = getArguments().getInt("id");
         }
     }
@@ -42,21 +45,24 @@ public class DetailPost extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View parentHolder = inflater.inflate(R.layout.fragment_detail_post, container, false);
+        return inflater.inflate(R.layout.fragment_detail_post, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         appDatabase = Room.databaseBuilder(getActivity().getApplicationContext(),
                 AppDatabase.class, "app-db").allowMainThreadQueries().build();
-        Button backButton = parentHolder.findViewById(R.id.backBtn);
+        Button backButton = getView().findViewById(R.id.backBtn);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PostsDisplayStudent homeFragment = new PostsDisplayStudent();
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
-
             }
         });
 
-        Button applyButton = parentHolder.findViewById(R.id.applyButton);
-        Button appliedButton = parentHolder.findViewById(R.id.appliedButton);
+        Button applyButton = getView().findViewById(R.id.applyButton);
+        Button appliedButton = getView().findViewById(R.id.appliedButton);
 
         new Thread(() -> {
             // Retrieve the current student's email
@@ -67,55 +73,46 @@ public class DetailPost extends Fragment {
 
             // Get the list of applied student emails from the post
             List<String> appliedStudentIds = post.getAppliedStudentIdsList();
-            applyButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            applyButton.setOnClickListener(v -> {
+                if (appliedStudentIds == null){
+                    //List<String> l1 = new ArrayList<String>();
+                    appliedStudentIds.add(currentStudentEmail);
 
-                    if(appliedStudentIds == null){
-                        //List<String> l1 = new ArrayList<String>();
-                        appliedStudentIds.add(currentStudentEmail);
-
-                        post.setAppliedStudentIdsList(appliedStudentIds);
-                    }
-                    else{
-                        appliedStudentIds.add(currentStudentEmail);
-                        post.setAppliedStudentIdsList(appliedStudentIds);}
-
-                    // Update the post in the database
-                    appDatabase.postDao().updatePost(post);
-                    applyButton.setVisibility(View.GONE);
-                    appliedButton.setVisibility(View.VISIBLE);
-                    Log.d("appliedStudents apply", post.appliedStudentIds);
+                    post.setAppliedStudentIdsList(appliedStudentIds);
+                } else {
+                    appliedStudentIds.add(currentStudentEmail);
+                    post.setAppliedStudentIdsList(appliedStudentIds);
                 }
+
+                // Update the post in the database
+                appDatabase.postDao().updatePost(post);
+                applyButton.setVisibility(View.GONE);
+                appliedButton.setVisibility(View.VISIBLE);
+                Log.d("appliedStudents apply", post.appliedStudentIds);
             });
-            appliedButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    new Thread(() -> {
-                        // Retrieve the current student's email
-                        String currentStudentEmail = ((GlobalVariable) getActivity().getApplication()).getEmail();
+            appliedButton.setOnClickListener(v -> new Thread(() -> {
+                // Retrieve the current student's email
+                String currentStudentEmail1 = ((GlobalVariable) getActivity().getApplication()).getEmail();
 
-                        // Retrieve the current post
-                        Post post = appDatabase.postDao().getPostById(postId);
+                // Retrieve the current post
+                Post post1 = appDatabase.postDao().getPostById(postId);
 
 
-                        // Remove the current student's email from the list
-                        appliedStudentIds.remove(currentStudentEmail);
-                        post.setAppliedStudentIdsList(appliedStudentIds);
+                // Remove the current student's email from the list
+                appliedStudentIds.remove(currentStudentEmail1);
+                post1.setAppliedStudentIdsList(appliedStudentIds);
 
-                        // Update the post in the database
-                        appDatabase.postDao().updatePost(post);
+                // Update the post in the database
+                appDatabase.postDao().updatePost(post1);
 
-                        // Update the UI on the main thread
-                        getActivity().runOnUiThread(() -> {
-                            appliedButton.setVisibility(View.GONE);
-                            applyButton.setVisibility(View.VISIBLE);
-                        });
-                        Log.d("appliedStudents remove", post.appliedStudentIds);
-                    }).start();
+                // Update the UI on the main thread
+                getActivity().runOnUiThread(() -> {
+                    appliedButton.setVisibility(View.GONE);
+                    applyButton.setVisibility(View.VISIBLE);
+                });
+                Log.d("appliedStudents remove", post1.appliedStudentIds);
+            }).start());
 
-                }
-});
             // Check if the list contains the current student's email
             if (appliedStudentIds!=null && appliedStudentIds.contains(currentStudentEmail)) {
                 // If the student has already applied, disable the apply button or change its text
@@ -125,22 +122,21 @@ public class DetailPost extends Fragment {
                 });
             } else {
                 applyButton.setVisibility(View.VISIBLE);
+            }
+        }).start();
 
-            }}).start();
+        TextView detailJobName = getView().findViewById(R.id.detailJobName);
+        TextView detailEmployer = getView().findViewById(R.id.detailEmployer);
+        TextView detailDate = getView().findViewById(R.id.detailDate);
+        TextView detailOnsiteOnline = getView().findViewById(R.id.detailOnsiteOnline);
+        TextView detailLocation = getView().findViewById(R.id.detailLocation);
+        TextView detailRequirements = getView().findViewById(R.id.detailRequirements);
+        TextView detailReqYearOfStudy = getView().findViewById(R.id.detailReqYearOfStudy);
+        TextView detailEmail = getView().findViewById(R.id.detailEmail);
+        TextView detailPhone = getView().findViewById(R.id.detailPhone);
+        TextView detailDesc = getView().findViewById(R.id.detailDesc);
 
-
-
-        TextView detailJobName = parentHolder.findViewById(R.id.detailJobName);
-        TextView detailEmployer = parentHolder.findViewById(R.id.detailEmployer);
-        TextView detailDate = parentHolder.findViewById(R.id.detailDate);
-        TextView detailOnsiteOnline = parentHolder.findViewById(R.id.detailOnsiteOnline);
-        TextView detailLocation = parentHolder.findViewById(R.id.detailLocation);
-        TextView detailRequirements = parentHolder.findViewById(R.id.detailRequirements);
-        TextView detailReqYearOfStudy = parentHolder.findViewById(R.id.detailReqYearOfStudy);
-        TextView detailEmail = parentHolder.findViewById(R.id.detailEmail);
-        TextView detailPhone = parentHolder.findViewById(R.id.detailPhone);
-        TextView detailDesc = parentHolder.findViewById(R.id.detailDesc);
-
+        // print data from selected post
         new Thread(() -> {
             Post post = appDatabase.postDao().getPostById(postId);
             detailJobName.setText(post.jobName);
@@ -154,6 +150,5 @@ public class DetailPost extends Fragment {
             detailPhone.setText(post.phone);
             detailDesc.setText(post.desc);
         }).start();
-        return parentHolder;
     }
 }

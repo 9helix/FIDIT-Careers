@@ -1,5 +1,6 @@
 package hr.uniri.fiditcareers;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -29,6 +30,7 @@ public class EditPost extends Fragment {
     public static EditPost newInstance(int id) {
         EditPost fragment = new EditPost();
         Bundle args = new Bundle();
+        // store selected post's ID as argument
         args.putInt("id", id);
         fragment.setArguments(args);
         return fragment;
@@ -38,6 +40,7 @@ public class EditPost extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            // get stored post's ID
             postId = getArguments().getInt("id");
         }
     }
@@ -80,6 +83,7 @@ public class EditPost extends Fragment {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
+        // fill input fields with info from selected post
         new Thread(() -> {
             Post post = appDatabase.postDao().getPostById(postId);
             jobNameTxt.setText(post.jobName);
@@ -99,6 +103,7 @@ public class EditPost extends Fragment {
             }
         }).start();
 
+        // when Save button is clicked
         savePostBtn.setOnClickListener(view1 -> {
             String jobName = jobNameTxt.getText().toString();
             String requiredYearOfStudy = requiredYearOfStudyTxt.getText().toString();
@@ -143,6 +148,7 @@ public class EditPost extends Fragment {
                 return;
             }
 
+            // updates edited post
             new Thread(() -> {
                 int reqYearOfStudy =  Integer.parseInt(requiredYearOfStudy);
                 Post post = appDatabase.postDao().getPostById(postId);
@@ -165,7 +171,9 @@ public class EditPost extends Fragment {
                 appDatabase.postDao().updatePost(post);
 
                 getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), "Uspješno ažuriran oglas!", Toast.LENGTH_SHORT).show());
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostsDisplayEmployer()).commit();
+                // refresh employer's dashboard
+                Intent in = new Intent(getActivity(), DashboardEmployer.class);
+                startActivity(in);
             }).start();
         });
     }

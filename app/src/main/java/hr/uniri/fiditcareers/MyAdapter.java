@@ -140,7 +140,7 @@ class MyViewHolder extends RecyclerView.ViewHolder{
     Button appliedStudentsButton;
     public MyViewHolder(@NonNull View itemView) {
         super(itemView);
-        // initializing elements from recyle item
+        // initializing elements from recycle item
         internshipName = itemView.findViewById(R.id.internshipName);
         internshipDate = itemView.findViewById(R.id.internshipDate);
         internshipEmployer = itemView.findViewById(R.id.internshipEmployer);

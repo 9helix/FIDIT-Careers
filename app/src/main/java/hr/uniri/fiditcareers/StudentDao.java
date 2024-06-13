@@ -11,9 +11,6 @@ public interface StudentDao {
     @Insert
     void insert(Student student);
 
-    @Query("SELECT * FROM Student")
-    List<Student> getAll();
-
     @Query("SELECT * FROM Student WHERE `E-mail` = :email")
     Student getStudentByEmail(String email);
 

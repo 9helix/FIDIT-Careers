@@ -28,8 +28,11 @@ public class StudentRegistration extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         appDatabase = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "app-db").build();
+
+        // get all form fields
         Button loginBtn = findViewById(R.id.loginBtn);
         EditText emailTxt = findViewById(R.id.editEmailTxt);
         EditText passTxt = findViewById(R.id.editPassTxt);
@@ -40,6 +43,7 @@ public class StudentRegistration extends AppCompatActivity {
         EditText studyYearTxt = findViewById(R.id.editStudyYearTxt);
         EditText confirmPassTxt = findViewById(R.id.confirmPassTxt);
 
+        // when registration button is clicked
         loginBtn.setOnClickListener(view -> {
             String name = nameTxt.getText().toString();
             String surname = surnameTxt.getText().toString();
@@ -104,6 +108,8 @@ public class StudentRegistration extends AppCompatActivity {
                     // Insert the student object into the database
                     appDatabase.studentDao().insert(newStudent);
                     runOnUiThread(() -> Toast.makeText(StudentRegistration.this, "Registracija uspjela.", Toast.LENGTH_SHORT).show());
+
+                    // Redirect user to the login page
                     Intent i = new Intent(StudentRegistration.this,StudentLogin.class);
                     startActivity(i);
 

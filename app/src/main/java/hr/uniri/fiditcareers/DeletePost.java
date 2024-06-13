@@ -26,6 +26,7 @@ public class DeletePost extends DialogFragment {
     public static DeletePost newInstance(int id) {
         DeletePost fragment = new DeletePost();
         Bundle args = new Bundle();
+        // store selected post's ID as argument
         args.putInt("id", id);
         fragment.setArguments(args);
         return fragment;
@@ -35,6 +36,7 @@ public class DeletePost extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            // get stored post's ID
             postId = getArguments().getInt("id");
         }
     }
@@ -57,6 +59,7 @@ public class DeletePost extends DialogFragment {
             new Thread(() -> {
                 appDatabase.postDao().deletePostById(postId);
                 getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), "Uspješno obrisan oglas!", Toast.LENGTH_SHORT).show());
+                // refresh employer's dashboard
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostsDisplayEmployer()).commit();
             }).start();
             onDestroyView();
@@ -66,6 +69,7 @@ public class DeletePost extends DialogFragment {
         });
     }
 
+    // closes pop-up for delete confirmation
     public void onDestroyView() {
         super.onDestroyView();
     }

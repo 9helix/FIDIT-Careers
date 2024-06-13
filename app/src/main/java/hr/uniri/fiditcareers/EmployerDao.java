@@ -19,9 +19,6 @@ public interface EmployerDao {
     @Query("SELECT * FROM Employer WHERE id = :id")
     Employer getEmployerById(int id);
 
-    @Query("DELETE FROM Employer WHERE `E-mail` = :email")
-    void deleteEmployerByEmail(String email);
-
     @Update
     void updateEmployer(Employer employer);
 }

@@ -93,6 +93,7 @@ public class DashboardStudent extends AppCompatActivity
                 myEdit.putString("email", ""); // store email
                 myEdit.putString("type", "");
                 myEdit.apply();
+
                 Toast.makeText(this, "Uspješna odjava!", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(DashboardStudent.this,StudentLogin.class);
                 startActivity(i);

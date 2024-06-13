@@ -83,13 +83,8 @@ public class DashboardEmployer extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostsDisplayEmployer()).commit();
                 break;
             case R.id.nav_edit_student:
-                //SearchView searchView = findViewById(R.id.search);
-                //searchView.setVisibility(View.GONE);
-
                 EmployerEditFragment fragment = EmployerEditFragment.newInstance(employerEmailArg);
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
-
-                //Toast.makeText(this, "Settings clicked!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_logout:
                 AtomicReference<SharedPreferences> sharedPreferences = new AtomicReference<>(getSharedPreferences("MySharedPref", MODE_PRIVATE));
@@ -98,6 +93,7 @@ public class DashboardEmployer extends AppCompatActivity
                 myEdit.putString("email", ""); // store email
                 myEdit.putString("type", "");
                 myEdit.apply();
+
                 Toast.makeText(this, "Uspješna odjava!", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(DashboardEmployer.this,EmployerLogin.class);
                 startActivity(i);

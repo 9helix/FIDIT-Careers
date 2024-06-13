@@ -42,18 +42,17 @@ public class StudentLogin extends AppCompatActivity {
             ((GlobalVariable) this.getApplication()).setEmail(savedEmail);
             ((GlobalVariable) this.getApplication()).setType(type);
 
-            if(type.equals("employer")){
+            if (type.equals("employer")){
                 Intent i = new Intent(StudentLogin.this, DashboardEmployer.class);
                 startActivity(i);
                 finish();
+            } else {
+                // Use the email for whatever you need
+                Intent i = new Intent(StudentLogin.this, DashboardStudent.class);
+                startActivity(i);
+                finish();
             }
-            else{
-            // Use the email for whatever you need
-            Intent i = new Intent(StudentLogin.this, DashboardStudent.class);
-            startActivity(i);
-            finish();}
         }
-
 
         appDatabase = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "app-db").build();
@@ -84,6 +83,7 @@ public class StudentLogin extends AppCompatActivity {
                         myEdit.putString("type", "student");
                         myEdit.apply();
                     }
+
                     // store email and type in global variables
                     ((GlobalVariable) this.getApplication()).setEmail(email);
                     ((GlobalVariable) this.getApplication()).setType("student");
@@ -92,11 +92,8 @@ public class StudentLogin extends AppCompatActivity {
                     startActivity(i);
                 } else {
                     runOnUiThread(() -> Toast.makeText(StudentLogin.this, "Neuspjela prijava. Provjerite podatke.", Toast.LENGTH_SHORT).show());
-
                 }
             }).start();
-
-
         });
 
         registerTxt.setOnClickListener(view -> {
@@ -107,6 +104,5 @@ public class StudentLogin extends AppCompatActivity {
             Intent i = new Intent(StudentLogin.this, EmployerLogin.class);
             startActivity(i);
         });
-
     }
 }

@@ -6,7 +6,7 @@
     android:layout_height="176dp"
     android:gravity="bottom"
     android:padding="16dp"
-    android:background="@android:color/darker_gray"
+    android:background="@color/blue"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <TextView
@@ -16,7 +16,6 @@
         android:textColor="@color/white"
         android:textSize="32dp"
         android:textStyle="bold"
-        android:text="test"
         android:layout_marginBottom="10dp"/>
 
     <TextView
@@ -24,7 +23,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:text="test"
         android:textSize="20dp"
         android:layout_marginBottom="16dp"/>
 
