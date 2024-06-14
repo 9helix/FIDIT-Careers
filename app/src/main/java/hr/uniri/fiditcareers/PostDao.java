@@ -17,6 +17,9 @@ public interface PostDao {
     @Query("SELECT * FROM Post WHERE `Employer Id` = :id")
     List<Post> getPostsByEmployerId(int id);
 
+    @Query("DELETE FROM Post WHERE `Employer Id` = :id")
+    void deletePostsByEmployerId(int id);
+
     @Query("SELECT * FROM Post WHERE id = :id")
     Post getPostById(int id);
 

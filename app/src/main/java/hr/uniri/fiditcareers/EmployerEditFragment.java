@@ -18,29 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class EmployerEditFragment extends Fragment {
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-
-    private AppDatabase appDatabase;
-
     public EmployerEditFragment() {
         // Required empty public constructor
-    }
-
-    public static EmployerEditFragment newInstance(String param1) {
-        EmployerEditFragment fragment = new EmployerEditFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            String employerEmail = getArguments().getString(ARG_PARAM1);
-        }
     }
 
     @Override
@@ -55,10 +34,7 @@ public class EmployerEditFragment extends Fragment {
         DashboardEmployer dashboardEmployer = (DashboardEmployer) getActivity();
         assert dashboardEmployer != null;
         HashMap<String, Object> employerData = dashboardEmployer.employerData;
-
         int id = (Integer) employerData.get("id");
-        TextView employerId = getView().findViewById(R.id.employerIdText);
-        employerId.setText(getString(R.string.account_id, id));
 
         String name = (String) employerData.get("name");
         EditText nameEditText = getView().findViewById(R.id.editNameText);

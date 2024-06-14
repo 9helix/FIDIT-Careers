@@ -29,7 +29,8 @@ public class DashboardEmployer extends AppCompatActivity
     public DrawerLayout drawerLayout;
     public AppDatabase appDatabase;
     public HashMap<String, Object> employerData = new HashMap<>();
-    private String employerEmailArg;
+    public String employerEmailArg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +73,6 @@ public class DashboardEmployer extends AppCompatActivity
             employerData.put("name", employer.employerName);
             employerData.put("email", employer.email);
             employerData.put("pass", employer.password);
-
         }).start();
     }
 
@@ -83,8 +83,11 @@ public class DashboardEmployer extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostsDisplayEmployer()).commit();
                 break;
             case R.id.nav_edit_student:
-                EmployerEditFragment fragment = EmployerEditFragment.newInstance(employerEmailArg);
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new EmployerEditFragment()).commit();
+                break;
+            case R.id.nav_delete:
+                DeleteAccount dialogFragment = DeleteAccount.newInstance(employerEmailArg, "employer");
+                dialogFragment.show(getSupportFragmentManager(),"Obriši korisnički račun");
                 break;
             case R.id.nav_logout:
                 AtomicReference<SharedPreferences> sharedPreferences = new AtomicReference<>(getSharedPreferences("MySharedPref", MODE_PRIVATE));

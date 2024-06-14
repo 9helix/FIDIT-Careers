@@ -57,7 +57,7 @@ public class DetailPost extends Fragment {
             @Override
             public void onClick(View v) {
                 PostsDisplayStudent homeFragment = new PostsDisplayStudent();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, homeFragment).commit();
             }
         });
 
@@ -90,6 +90,7 @@ public class DetailPost extends Fragment {
                 appliedButton.setVisibility(View.VISIBLE);
                 Log.d("appliedStudents apply", post.appliedStudentIds);
             });
+
             appliedButton.setOnClickListener(v -> new Thread(() -> {
                 // Retrieve the current student's email
                 String currentStudentEmail1 = ((GlobalVariable) getActivity().getApplication()).getEmail();

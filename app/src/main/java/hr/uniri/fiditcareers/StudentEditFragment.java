@@ -17,28 +17,8 @@ import android.widget.Toast;
 import java.util.HashMap;
 
 public class StudentEditFragment extends Fragment {
-
-    private static final String ARG_PARAM1 = "param1";
-    private AppDatabase appDatabase;
-
     public StudentEditFragment() {
         // Required empty public constructor
-    }
-
-    public static StudentEditFragment newInstance(String studentEmail) {
-        StudentEditFragment fragment = new StudentEditFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, studentEmail);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            String studentEmail = getArguments().getString(ARG_PARAM1);
-        }
     }
 
     @Override
@@ -53,11 +33,7 @@ public class StudentEditFragment extends Fragment {
         DashboardStudent dashboardStudent = (DashboardStudent) getActivity();
         assert dashboardStudent != null;
         HashMap<String, Object> studentData = dashboardStudent.studentData;
-
-        //String idStr= (String) ;
         int id = (Integer) studentData.get("id");
-        TextView studentId = getView().findViewById(R.id.studentIdTxt);
-        studentId.setText(getString(R.string.account_id, id));
 
         String name = (String) studentData.get("name");
         EditText editNameText = getView().findViewById(R.id.editNameText);

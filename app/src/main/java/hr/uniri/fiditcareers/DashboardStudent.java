@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.FragmentActivity;
 import androidx.room.Room;
 
 import com.google.android.material.navigation.NavigationView;
@@ -26,7 +28,7 @@ public class DashboardStudent extends AppCompatActivity
     public DrawerLayout drawerLayout;
     public AppDatabase appDatabase;
     public HashMap<String, Object> studentData = new HashMap<>();
-    private String studentEmailArg = "email";
+    public String studentEmailArg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +85,11 @@ public class DashboardStudent extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostsDisplayStudent()).commit();
                 break;
             case R.id.nav_edit_student:
-                StudentEditFragment fragment = StudentEditFragment.newInstance(studentEmailArg);
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StudentEditFragment()).commit();
+                break;
+            case R.id.nav_delete:
+                DeleteAccount dialogFragment = DeleteAccount.newInstance(studentEmailArg, "student");
+                dialogFragment.show(getSupportFragmentManager(),"Obriši korisnički račun");
                 break;
             case R.id.nav_logout:
                 AtomicReference<SharedPreferences> sharedPreferences = new AtomicReference<>(getSharedPreferences("MySharedPref", MODE_PRIVATE));

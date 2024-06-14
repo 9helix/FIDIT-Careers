@@ -14,6 +14,9 @@ public interface StudentDao {
     @Query("SELECT * FROM Student WHERE `E-mail` = :email")
     Student getStudentByEmail(String email);
 
+    @Query("DELETE FROM Student WHERE `E-mail` = :email")
+    void deleteStudentByEmail(String email);
+
     @Query("SELECT * FROM Student WHERE id = :id")
     Student getStudentById(int id);
 
