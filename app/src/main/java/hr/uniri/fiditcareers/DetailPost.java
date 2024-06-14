@@ -1,5 +1,6 @@
 package hr.uniri.fiditcareers;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -91,28 +92,37 @@ public class DetailPost extends Fragment {
                 Log.d("appliedStudents apply", post.appliedStudentIds);
             });
 
-            appliedButton.setOnClickListener(v -> new Thread(() -> {
-                // Retrieve the current student's email
-                String currentStudentEmail1 = ((GlobalVariable) getActivity().getApplication()).getEmail();
+            appliedButton.setOnClickListener(v -> {
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Potvrda")
+                        .setMessage("Jeste li sigurni da želite poništiti prijavu na ovaj oglas?")
+                        .setPositiveButton("Potvrdi", (dialog, which) -> new Thread(() -> {
+                            // Retrieve the current student's email
+                            String currentStudentEmail1 = ((GlobalVariable) getActivity().getApplication()).getEmail();
 
-                // Retrieve the current post
-                Post post1 = appDatabase.postDao().getPostById(postId);
+                            // Retrieve the current post
+                            Post post1 = appDatabase.postDao().getPostById(postId);
 
+                            // Get the list of applied student emails from the post
+                            //List<String> appliedStudentIds = post1.getAppliedStudentIdsList();
 
-                // Remove the current student's email from the list
-                appliedStudentIds.remove(currentStudentEmail1);
-                post1.setAppliedStudentIdsList(appliedStudentIds);
+                            // Remove the current student's email from the list
+                            appliedStudentIds.remove(currentStudentEmail1);
+                            post1.setAppliedStudentIdsList(appliedStudentIds);
 
-                // Update the post in the database
-                appDatabase.postDao().updatePost(post1);
+                            // Update the post in the database
+                            appDatabase.postDao().updatePost(post1);
 
-                // Update the UI on the main thread
-                getActivity().runOnUiThread(() -> {
-                    appliedButton.setVisibility(View.GONE);
-                    applyButton.setVisibility(View.VISIBLE);
-                });
-                Log.d("appliedStudents remove", post1.appliedStudentIds);
-            }).start());
+                            // Update the UI on the main thread
+                            getActivity().runOnUiThread(() -> {
+                                appliedButton.setVisibility(View.GONE);
+                                applyButton.setVisibility(View.VISIBLE);
+                            });
+                            Log.d("appliedStudents remove", post1.appliedStudentIds);
+                        }).start())
+                        .setNegativeButton("Odustani", null)
+                        .show();
+            });
 
             // Check if the list contains the current student's email
             if (appliedStudentIds!=null && appliedStudentIds.contains(currentStudentEmail)) {

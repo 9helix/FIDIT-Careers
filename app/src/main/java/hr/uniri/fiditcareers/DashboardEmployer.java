@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.room.Room;
@@ -35,6 +36,7 @@ public class DashboardEmployer extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard_employer);
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -61,6 +63,9 @@ public class DashboardEmployer extends AppCompatActivity
             // gets the header menu
             TextView employerName, employerEmail;
             View header = navigationView.getHeaderView(0);
+
+            ImageView myImageView = header.findViewById(R.id.myImageView);
+            myImageView.setImageResource(R.drawable.round_business_24);
 
             // sets name and email of logged employer on menu
             employerName = header.findViewById(R.id.nameSurnamePlaceholder);
