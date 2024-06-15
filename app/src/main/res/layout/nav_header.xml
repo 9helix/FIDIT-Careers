@@ -22,12 +22,13 @@
             android:layout_marginBottom="10dp"
             android:textColor="@color/white"
             android:textSize="32dp"
+            android:text="lorem ipsum"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/myImageView"
             android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
             android:src="@drawable/round_school_24" />
     </LinearLayout>
@@ -38,6 +39,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:textSize="20dp"
+        android:text="lorem ipsum"
         android:layout_marginBottom="16dp"/>
 
 </LinearLayout>

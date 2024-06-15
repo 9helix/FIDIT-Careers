@@ -3,7 +3,6 @@ package hr.uniri.fiditcareers;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -11,7 +10,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.room.Room;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.HashMap;
@@ -88,7 +85,7 @@ public class DashboardEmployer extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PostsDisplayEmployer()).commit();
                 break;
             case R.id.nav_edit_student:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new EmployerEditFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new EmployerEdit()).commit();
                 break;
             case R.id.nav_delete:
                 DeleteAccount dialogFragment = DeleteAccount.newInstance(employerEmailArg, "employer");

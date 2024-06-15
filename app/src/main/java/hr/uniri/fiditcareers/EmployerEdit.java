@@ -11,14 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.HashMap;
-import java.util.List;
 
-public class EmployerEditFragment extends Fragment {
-    public EmployerEditFragment() {
+public class EmployerEdit extends Fragment {
+    public EmployerEdit() {
         // Required empty public constructor
     }
 
