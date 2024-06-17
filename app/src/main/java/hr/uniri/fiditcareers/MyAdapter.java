@@ -2,36 +2,34 @@ package hr.uniri.fiditcareers;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Button;
 
-import java.util.ArrayList;
-import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     private Context context;
     private String type;
     private List<Post> dataList;
 
-    public void setSearchList(List<Post> dataSearchList){
+    public void setSearchList(List<Post> dataSearchList) {
         this.dataList = dataSearchList;
         notifyDataSetChanged();
     }
 
     // constructor
-    public MyAdapter(Context context, List<Post> dataList){
+    public MyAdapter(Context context, List<Post> dataList) {
         this.context = context;
         // get the type of user from global variable
         type = ((GlobalVariable) context.getApplicationContext()).getType();
@@ -68,7 +66,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
             holder.recCard.setOnClickListener(view -> {
                 // send id of selected post to the fragment with details about the selected post
                 DetailPost fragment = DetailPost.newInstance(postId);
-                ((FragmentActivity)context).getSupportFragmentManager()
+                ((FragmentActivity) context).getSupportFragmentManager()
                         .beginTransaction().replace(R.id.fragment_container, fragment).commit();
             });
         } else { // display of posts for employers
@@ -80,14 +78,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
             // when edit icon is clicked
             holder.internshipEdit.setOnClickListener(view -> {
                 EditPost fragment = EditPost.newInstance(postId);
-                ((FragmentActivity)context).getSupportFragmentManager()
+                ((FragmentActivity) context).getSupportFragmentManager()
                         .beginTransaction().replace(R.id.fragment_container, fragment).commit();
             });
 
             // when trash icon is clicked
             holder.internshipDelete.setOnClickListener(view -> {
                 DeletePost dialogFragment = DeletePost.newInstance(postId);
-                dialogFragment.show(((FragmentActivity)context).getSupportFragmentManager(),"Obriši oglas");
+                dialogFragment.show(((FragmentActivity) context).getSupportFragmentManager(), "Obriši oglas");
             });
         }
 
@@ -105,16 +103,21 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
                     // Get the list of applied student emails from the post
                     List<String> appliedStudentEmails = post.getAppliedStudentIdsList();
 
-                    List<String> appliedStudentData= new ArrayList<>();
+                    List<String> appliedStudentData = new ArrayList<>();
                     for (String email : appliedStudentEmails) {
-                        Student student=appDatabase.studentDao().getStudentByEmail(email);
-                        appliedStudentData.add(student.name+" "+student.surname+" - "+email);
+                        Student student = appDatabase.studentDao().getStudentByEmail(email);
+                        if (student != null)
+                            appliedStudentData.add(student.name + " " + student.surname + " - " + email);
                     }
-                    // Convert the list to a string with each email separated by a newline
-                    String appliedStudentEmailsString = String.join("\n", appliedStudentData);
-
+                    String appliedStudentEmailsString;
+                    if(appliedStudentData.isEmpty())
+                        appliedStudentEmailsString="\nNema prijavljenih studenata.";
+                    else {
+                        // Convert the list to a string with each email separated by a newline
+                        appliedStudentEmailsString = String.join("\n", appliedStudentData);
+                    }
                     // Display the emails in a dialog on the main thread
-                    ((FragmentActivity)context).runOnUiThread(() -> {
+                    ((FragmentActivity) context).runOnUiThread(() -> {
                         new AlertDialog.Builder(context)
                                 .setTitle("Prijavljeni studenti")
                                 .setMessage(appliedStudentEmailsString)
@@ -132,12 +135,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
     }
 }
 
-class MyViewHolder extends RecyclerView.ViewHolder{
+class MyViewHolder extends RecyclerView.ViewHolder {
     TextView internshipName, internshipDate, internshipEmployer, internshipId,
             internshipOnsiteOnline, internshipLocation, internshipReqYearOfStudy;
     ImageView internshipEdit, internshipDelete;
     CardView recCard;
     Button appliedStudentsButton;
+
     public MyViewHolder(@NonNull View itemView) {
         super(itemView);
         // initializing elements from recycle item

@@ -5,18 +5,18 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.DialogFragment;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.room.Room;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
+import androidx.room.Room;
+
+import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class DeleteAccount extends DialogFragment {
@@ -80,7 +80,27 @@ public class DeleteAccount extends DialogFragment {
 
                 if (type.equals("student")) { // deletes student from database
                     appDatabase.studentDao().deleteStudentByEmail(deletionEmail);
+                    new Thread(() -> {
+                        // Retrieve all posts
+                        List<Post> allPosts = appDatabase.postDao().getAll();
 
+                        for (Post post : allPosts) {
+                            // Get the list of applied student emails
+                            List<String> appliedStudentIds = post.getAppliedStudentIdsList();
+
+                            // Check if deletionEmail is in the list
+                            if (appliedStudentIds.contains(deletionEmail)) {
+                                // If it is, remove it
+                                appliedStudentIds.remove(deletionEmail);
+
+                                // Set the updated list back to the post
+                                post.setAppliedStudentIdsList(appliedStudentIds);
+
+                                // Update the post in the database
+                                appDatabase.postDao().updatePost(post);
+                            }
+                        }
+                    }).start();
                     // redirect user to student login screen
                     Intent i = new Intent(getActivity(), StudentLogin.class);
                     startActivity(i);
