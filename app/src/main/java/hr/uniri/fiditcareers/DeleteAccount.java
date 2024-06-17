@@ -1,6 +1,9 @@
 package hr.uniri.fiditcareers;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
@@ -13,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 public class DeleteAccount extends DialogFragment {
 
@@ -59,6 +64,18 @@ public class DeleteAccount extends DialogFragment {
 
         yesBtn.setOnClickListener(view1 -> {
             new Thread(() -> {
+                AtomicReference<SharedPreferences> sharedPreferences = new AtomicReference<>(getActivity().getSharedPreferences("MySharedPref", MODE_PRIVATE));
+                boolean isLoggedIn = sharedPreferences.get().getBoolean("isLoggedIn", false);
+                String savedEmail = sharedPreferences.get().getString("email", ""); // retrieve email
+                if (isLoggedIn) {
+                    if (savedEmail.equals(deletionEmail)) {
+                        SharedPreferences.Editor myEdit = sharedPreferences.get().edit();
+                        myEdit.remove("isLoggedIn");
+                        myEdit.remove("email");
+                        myEdit.remove("type");
+                        myEdit.apply();
+                    }
+                }
                 getActivity().runOnUiThread(() -> Toast.makeText(getActivity(), "Uspješno obrisan korisnički račun!", Toast.LENGTH_SHORT).show());
 
                 if (type.equals("student")) { // deletes student from database
